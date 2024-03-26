@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "21.x"
+  },
   "name": "slackbot-starter",
   "version": "0.0.1",
   "description": "A starter for creating Slack bots",
