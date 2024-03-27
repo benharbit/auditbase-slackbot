@@ -15,8 +15,11 @@ export const addHttpHandlers = (args: {
   args.receiver.router.use(express.json());
   args.receiver.router.use(express.urlencoded({ extended: true }));
   args.receiver.router.get("/secret-page", (req, res) => {
+    console.log(`req.query: ${JSON.stringify(req.query)}`);
     const token = req.query.token as string;
+
     const hasAccess = token && args.allowedTokens.includes(token);
+
     if (!hasAccess) {
       console.log(`Attempted accessing http handler without valid token`);
       return res.send("OK");
