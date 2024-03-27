@@ -4,6 +4,7 @@ import { MessageError } from "./errors";
 import { ChatBot } from "./types";
 import { getFaceQuiz } from "./quiz";
 import { fetchUsers } from "./data";
+import { sendExplorerScanRequest } from "./auditBaseApi";
 
 const getFaceQuizCommand =
   (app: ChatBot) =>
@@ -61,6 +62,7 @@ const getExplorerScan =
 
     try {
       await ack();
+      console.log("command testzzz", command.text);
       const slackUsers = await fetchUsers({ app });
       const quiz = await getFaceQuiz({
         exclude: [command.user_id],

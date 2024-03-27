@@ -1,7 +1,7 @@
 import axios from "axios";
-const API_SERVER = "https://api.auditbase.dev";
+const API_SERVER = "https://api.auditbase.dev:3000";
 
-export async function send_explorer_scan_request(
+export async function sendExplorerScanRequest(
   chain_id: string,
   contract_address: string,
   webhook_url: string
