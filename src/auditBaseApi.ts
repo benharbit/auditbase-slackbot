@@ -13,13 +13,23 @@ export async function sendExplorerScanRequest(
     contract_address,
     webhook_url,
   };
+  try {
+    let res = await axios.post(url, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.AUDITBASE_API_KEY}`,
+      },
+    });
+    const res_data = res.data;
+    console.log(res_data);
+    return res_data;
+  } catch (error: Error | any) {
+    if (error.message) {
+      console.error(error.message);
+      return error.message;
+    }
+    console.log(error);
 
-  let res = await axios.post(url, data, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.AUDITBASE_API_KEY}`,
-    },
-  });
-  const res_data = res.data;
-  console.log(res_data);
+    return "unknown error";
+  }
 }

@@ -59,11 +59,33 @@ const getExplorerScan =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
+    const WEBHOOK_URL =
+      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
 
     try {
       await ack();
+      if (command.text) {
+        const strs = command.text.split(" ");
+        if (strs.length < 2) {
+          await app.dm({
+            user: command.user_id,
+            text: "chainId and address are required",
+          });
+          return;
+        }
+
+        console.log("chainId: ", strs[0]);
+        console.log("address: ", strs[1]);
+        const result = await sendExplorerScanRequest(
+          strs[0],
+          strs[1],
+          WEBHOOK_URL
+        );
+        console.log("result: ", result);
+      }
     } catch (error) {
       if (error instanceof MessageError) {
+        console.log("error: ", error);
         await app.dm({
           user: command.user_id,
           text: (error as MessageError).message,
