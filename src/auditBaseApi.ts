@@ -104,10 +104,17 @@ export async function getScan(
   } catch (error: Error | any) {
     if (error.message) {
       console.error(error.message);
-      return error.message;
+      return {
+        result: error.message,
+        numIssues: -99,
+        statusCode: -99,
+      };
+    } else {
+      return {
+        result: "unknown error",
+        numIssues: -99,
+        statusCode: -99,
+      };
     }
-    console.log(error);
-
-    return "unknown getScan";
   }
 }
