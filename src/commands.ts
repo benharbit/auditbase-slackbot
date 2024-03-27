@@ -111,6 +111,8 @@ const getScans =
       "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
 
     try {
+      const DO_TRUNCATE = true;
+
       await ack();
       if (command.text) {
         const args = command.text.split(" ");
@@ -129,7 +131,23 @@ const getScans =
           ++i;
         }
 
-        const result = await getScan(scanId, apiKey);
+        const result = await getScan(scanId, apiKey, DO_TRUNCATE);
+        if (result.statusCode === 200) {
+          const blocks = [
+            {
+              type: "plain_text",
+              text: "Scan has been completed successfully",
+            },
+            { type: `Number of issues: ${result.numIssues}` },
+            { type: `Truncated reports: ${result.result}` },
+          ];
+          await app.dm({
+            user: command.user_id,
+            blocks,
+          });
+        } else {
+          await app.dm({ user: command.user_id, text: JSON.stringify(result) });
+        }
         console.log("result: ", result);
       }
     } catch (error) {

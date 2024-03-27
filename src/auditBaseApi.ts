@@ -36,7 +36,32 @@ export async function sendExplorerScanRequest(
   }
 }
 
-export async function getScan(scanId: string, apiKey: string) {
+interface ScanResult {
+  result: string;
+  numIssues: number;
+  statusCode: number;
+}
+
+function getNumIssues(issues: any) {
+  return issues.length;
+}
+
+function truncate(data: object) {
+  const str = JSON.stringify(data);
+  if (str.length < 400) {
+    return str;
+  }
+
+  return (
+    str.slice(0, 400) + "..........." + str.slice(str.length - 400, str.length)
+  );
+}
+
+export async function getScan(
+  scanId: string,
+  apiKey: string,
+  doTruncate: boolean
+): Promise<ScanResult> {
   try {
     console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
@@ -60,6 +85,19 @@ export async function getScan(scanId: string, apiKey: string) {
         }`,
       },
     });
+    if (res.status === 200) {
+      return {
+        result: doTruncate ? truncate(res.data) : res.data,
+        statusCode: res.status,
+        numIssues: getNumIssues(res.data),
+      };
+    } else {
+      return {
+        result: "error",
+        numIssues: -99,
+        statusCode: res.status,
+      };
+    }
     const res_data = res.data;
     console.log(res_data);
     return res_data;
