@@ -62,13 +62,6 @@ const getExplorerScan =
 
     try {
       await ack();
-      console.log("command testzzz", command.text);
-      const slackUsers = await fetchUsers({ app });
-      const quiz = await getFaceQuiz({
-        exclude: [command.user_id],
-        slackUsers,
-      });
-      await app.dm({ user: command.user_id, blocks: quiz.blocks });
     } catch (error) {
       if (error instanceof MessageError) {
         await app.dm({
