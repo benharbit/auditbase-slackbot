@@ -16,6 +16,10 @@ const getFaceQuizCommand =
     ack: AckFn<string | RespondArguments>;
     say: SayFn;
   }) => {
+    console.log("command: ", command);
+    console.log("ack: ", ack);
+    console.log("says: ", say);
+
     try {
       await ack();
       const slackUsers = await fetchUsers({ app });
