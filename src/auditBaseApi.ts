@@ -38,12 +38,20 @@ export async function sendExplorerScanRequest(
 
 export async function getScan(scanId: string, apiKey: string) {
   try {
-    console.log("enter scan");
+    console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
     let url = API_SERVER + ROUTE;
     if (scanId) {
       url = url + "/" + scanId;
     }
+    console.log(`url: ${url}`);
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${
+        apiKey ? apiKey : process.env.AUDITBASE_API_KEY
+      }`,
+    };
+    console.log(`headers: ${headers}`);
     let res = await axios.get(url, {
       headers: {
         "Content-Type": "application/json",
@@ -63,31 +71,5 @@ export async function getScan(scanId: string, apiKey: string) {
     console.log(error);
 
     return "unknown getScan";
-  }
-}
-
-export async function getAll(scan_id: string, api_key?: string) {
-  const ROUTE = "scans/";
-  const url = API_SERVER + ROUTE + scan_id;
-  try {
-    let res = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${
-          api_key ? api_key : process.env.AUDITBASE_API_KEY
-        }`,
-      },
-    });
-    const res_data = res.data;
-    console.log(res_data);
-    return res_data;
-  } catch (error: Error | any) {
-    if (error.message) {
-      console.error(error.message);
-      return error.message;
-    }
-    console.log(error);
-
-    return "unknown error";
   }
 }
