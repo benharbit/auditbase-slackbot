@@ -38,6 +38,7 @@ export async function sendExplorerScanRequest(
 
 export async function getScan(scanId: string, apiKey: string) {
   try {
+    console.log("enter scan");
     const ROUTE = "scans";
     let url = API_SERVER + ROUTE;
     if (scanId) {
