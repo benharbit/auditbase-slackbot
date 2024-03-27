@@ -1,12 +1,12 @@
 import axios from "axios";
-const API_SERVER = "https://api.auditbase.dev:3000";
+const API_SERVER = "https://api.auditbase.dev:3000/v1";
 
 export async function sendExplorerScanRequest(
   chain_id: string,
   contract_address: string,
   webhook_url: string
 ) {
-  const ROUTE = "route = 'scans/upload'";
+  const ROUTE = "route = 'scans/explorer'";
   const url = API_SERVER + ROUTE;
   const data = {
     chain_id,
