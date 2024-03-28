@@ -181,6 +181,6 @@ const getScans =
 
 export const addSlashCommands = (app: ChatBot) => {
   app.command("/facequiz", getFaceQuizCommand(app));
-  app.command("/explorer-scan", getExplorerScan(app));
+  app.command("/scans-explorer", getExplorerScan(app));
   app.command("/scans", getScans(app));
 };
