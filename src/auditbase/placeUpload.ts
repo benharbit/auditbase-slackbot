@@ -41,6 +41,10 @@ type FileData = {
 };
 
 async function buildFiles(files: string[]) {
+  const fileList = getFileList();
+  for (const x in fileList) {
+    console.log(`file ${JSON.stringify(x)}`);
+  }
   const filesRtn: FileData = {};
   for (const file of files) {
     const file_data = await getFile(file);
