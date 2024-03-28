@@ -10,7 +10,7 @@ async function getFileList() {
     const result = await client.files.list();
     console.log("result", JSON.stringify(result));
     if (result?.files) {
-      for (const x in result.files) {
+      for (const x of result.files) {
         console.log(`filezzz: ${JSON.stringify(x)}`);
       }
     }
