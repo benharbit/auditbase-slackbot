@@ -56,7 +56,7 @@ export async function sendExplorerScanRequest(
 }
 
 interface ScanResult {
-  result: string;
+  result: Object;
   numIssues: number;
   statusCode: number;
 }

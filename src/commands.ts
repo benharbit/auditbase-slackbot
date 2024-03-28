@@ -134,10 +134,6 @@ const getScans =
 
         const result = await getScan(scanId, apiKey);
         if (result.statusCode === 200) {
-          filename = 
-          with open("result.json", "w") as f:
-            f.write(result.result);
-
           const blocks = [
             {
               type: "section",
