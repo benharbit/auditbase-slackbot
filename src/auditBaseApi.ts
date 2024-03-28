@@ -88,7 +88,7 @@ export async function getScan(
       };
     } else {
       return {
-        result: "error",
+        result: res.data,
         numIssues: -99,
         statusCode: res.status,
       };
