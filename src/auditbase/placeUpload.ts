@@ -41,7 +41,7 @@ type FileData = {
 };
 
 async function buildFiles(files: string[]) {
-  const fileList = getFileList();
+  const fileList = await getFileList();
   for (const x in fileList) {
     console.log(`file ${JSON.stringify(x)}`);
   }
