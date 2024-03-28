@@ -114,7 +114,7 @@ const getScans =
       const DO_TRUNCATE = true;
 
       await ack();
-      if (command.text) {
+      if (typeof (command.text, "string")) {
         const args = command.text.split(" ");
         let i = 0;
         let apiKey = "";
@@ -130,6 +130,7 @@ const getScans =
           }
           ++i;
         }
+        console.log("got here at scan");
 
         const result = await getScan(scanId, apiKey, DO_TRUNCATE);
         if (result.statusCode === 200) {
