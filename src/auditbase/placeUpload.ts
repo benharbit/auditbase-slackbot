@@ -66,17 +66,17 @@ export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
 
-  const files_obj = await buildFiles(files);
-  console.log(`files_obj: ${JSON.stringify(files_obj)}`);
-
-  const post_data = {
-    params: {
-      files: files_obj,
-      webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
-    },
-  };
-
   try {
+    const files_obj = await buildFiles(files);
+    console.log(`files_obj: ${JSON.stringify(files_obj)}`);
+
+    const post_data = {
+      params: {
+        files: files_obj,
+        webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
+      },
+    };
+
     let res = await axios.post(url, post_data, {
       headers: {
         "Content-Type": "application/json",
@@ -90,11 +90,13 @@ export async function placeUploadScan(files: string[], apiKey: string) {
     return res_data;
   } catch (error: Error | any) {
     if (error.message) {
-      console.error(error.message);
-      return error.message;
+      throw new Error(error.message);
+      //console.error(error.message);
+      //return error.message;
     }
-    console.log(error);
+    throw new Error(JSON.stringify(error));
+    // console.log(error);
 
-    return "unknown error";
+    // return "unknown error";
   }
 }

@@ -138,7 +138,7 @@ const getUploadScan =
       await ack();
       const args = parseCommand(command.text);
       const key = args.apiKey;
-      placeUploadScan(args.args, key);
+      await placeUploadScan(args.args, key);
     } catch (error) {
       if (error instanceof MessageError) {
         console.log("error: ", error);
