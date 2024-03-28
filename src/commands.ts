@@ -4,7 +4,8 @@ import { MessageError } from "./errors";
 import { ChatBot } from "./types";
 import { getFaceQuiz } from "./quiz";
 import { fetchUsers } from "./data";
-import { sendExplorerScanRequest, getScan, truncate } from "./auditBaseApi";
+import { placeExplorerScan, getScan, truncate } from "./auditBaseApi";
+import { placeUploadScan } from "./auditbase/placeUpload";
 
 const getFaceQuizCommand =
   (app: ChatBot) =>
@@ -45,6 +46,28 @@ const getFaceQuizCommand =
     }
   };
 
+const parseCommand = (text: string) => {
+  const args = text.split(" ");
+  let i = 0;
+  let apiKey = "";
+  const rtnArgs = [];
+  while (i < args.length) {
+    if (args[i].trim() === "key") {
+      if (i < args.length - 1) {
+        apiKey = args[i + 1];
+        ++i;
+      }
+    } else {
+      rtnArgs.push(args[i]);
+    }
+    ++i;
+  }
+  return {
+    args: rtnArgs,
+    apiKey,
+  };
+};
+
 const getExplorerScan =
   (app: ChatBot) =>
   async ({
@@ -77,9 +100,45 @@ const getExplorerScan =
 
         console.log("chainId: ", strs[0]);
         console.log("address: ", strs[1]);
-        const result = await sendExplorerScanRequest(strs[0], strs[1], apiKey);
+        const result = await placeExplorerScan(strs[0], strs[1], apiKey);
         console.log("result: ", result);
       }
+    } catch (error) {
+      if (error instanceof MessageError) {
+        console.log("error: ", error);
+        await app.dm({
+          user: command.user_id,
+          text: (error as MessageError).message,
+        });
+      } else {
+        throw error;
+      }
+    }
+  };
+
+const getUploadScan =
+  (app: ChatBot) =>
+  async ({
+    command,
+    ack,
+    say,
+  }: {
+    command: SlashCommand;
+    ack: AckFn<string | RespondArguments>;
+    say: SayFn;
+  }) => {
+    console.log("command: ", command);
+    console.log("ack: ", ack);
+    console.log("says: ", say);
+
+    const WEBHOOK_URL =
+      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+
+    try {
+      await ack();
+      const args = parseCommand(command.text);
+      const key = args.apiKey;
+      placeUploadScan(args.args, key);
     } catch (error) {
       if (error instanceof MessageError) {
         console.log("error: ", error);
@@ -183,4 +242,5 @@ export const addSlashCommands = (app: ChatBot) => {
   app.command("/facequiz", getFaceQuizCommand(app));
   app.command("/scans-explorer", getExplorerScan(app));
   app.command("/scans", getScans(app));
+  app.command("/scans-upload", getUploadScan(app));
 };

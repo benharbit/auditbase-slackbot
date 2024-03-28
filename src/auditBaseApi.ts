@@ -4,39 +4,7 @@ const API_SERVER = "https://api.auditbase.dev/v1/";
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
-async function getFileList() {
-  try {
-    // Call the files.list API method
-    const result = await client.files.list();
-
-    // Extract the files array from the response
-    const files = result.files;
-
-    // Return the list of files
-    return files;
-  } catch (error) {
-    console.error("Error fetching file list:", error);
-    return [];
-  }
-}
-
-async function getFile(fileId: string) {
-  try {
-    // Call the files.info API method with the fileId
-    const result = await client.files.info({ file: fileId });
-
-    // Extract the file object from the response
-    const file = result.file;
-
-    // Return the file object
-    return file;
-  } catch (error) {
-    console.error("Error fetching file:", error);
-    return null;
-  }
-}
-
-export async function sendExplorerScanRequest(
+export async function placeExplorerScan(
   chain_id: string,
   contract_address: string,
   apiKey: string
