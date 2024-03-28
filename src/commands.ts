@@ -4,7 +4,7 @@ import { MessageError } from "./errors";
 import { ChatBot } from "./types";
 import { getFaceQuiz } from "./quiz";
 import { fetchUsers } from "./data";
-import { sendExplorerScanRequest, getScan } from "./auditBaseApi";
+import { sendExplorerScanRequest, getScan, truncate } from "./auditBaseApi";
 
 const getFaceQuizCommand =
   (app: ChatBot) =>
@@ -132,8 +132,12 @@ const getScans =
         }
         console.log("got here at scan");
 
-        const result = await getScan(scanId, apiKey, DO_TRUNCATE);
+        const result = await getScan(scanId, apiKey);
         if (result.statusCode === 200) {
+          filename = 
+          with open("result.json", "w") as f:
+            f.write(result.result);
+
           const blocks = [
             {
               type: "section",
@@ -153,7 +157,7 @@ const getScans =
               type: "section",
               text: {
                 type: "plain_text",
-                text: `Truncated reports: ${result.result}`,
+                text: `Truncated reports: ${truncate(result.result)}`,
               },
             },
           ];

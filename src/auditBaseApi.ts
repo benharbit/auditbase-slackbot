@@ -1,5 +1,24 @@
 import axios from "axios";
+import { WebClient } from "@slack/web-api";
 const API_SERVER = "https://api.auditbase.dev/v1/";
+
+const client = new WebClient(process.env.SLACK_BOT_TOKEN);
+
+async function getFileList() {
+  try {
+    // Call the files.list API method
+    const result = await client.files.list();
+
+    // Extract the files array from the response
+    const files = result.files;
+
+    // Return the list of files
+    return files;
+  } catch (error) {
+    console.error("Error fetching file list:", error);
+    return [];
+  }
+}
 
 export async function sendExplorerScanRequest(
   chain_id: string,
@@ -46,7 +65,7 @@ function getNumIssues(issues: any) {
   return issues.length;
 }
 
-function truncate(data: object) {
+export function truncate(data: object) {
   const str = JSON.stringify(data);
   if (str.length < 400) {
     return str;
@@ -59,16 +78,17 @@ function truncate(data: object) {
 
 export async function getScan(
   scanId: string,
-  apiKey: string,
-  doTruncate: boolean
+  apiKey: string
 ): Promise<ScanResult> {
   try {
     console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
+    console.log(`file list: ${await getFileList()}`);
     let url = API_SERVER + ROUTE;
     if (scanId) {
       url = url + "/" + scanId;
     }
+
     console.log(`url: ${url}`);
     const headers = {
       "Content-Type": "application/json",
@@ -82,7 +102,7 @@ export async function getScan(
     });
     if (res.status === 200) {
       return {
-        result: doTruncate ? truncate(res.data) : res.data,
+        result: res.data,
         statusCode: res.status,
         numIssues: getNumIssues(res.data),
       };
