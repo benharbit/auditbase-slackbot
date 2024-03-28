@@ -10,9 +10,9 @@ async function getFileList() {
     const result = await client.files.list();
     console.log("result", JSON.stringify(result));
     if (result?.files) {
-      for (const x of result.files) {
+      result.files.forEach((x: any) => {
         console.log(`filezzz: ${JSON.stringify(x)}`);
-      }
+      });
     }
 
     // Extract the files array from the response
