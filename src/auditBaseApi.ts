@@ -76,14 +76,9 @@ export async function getScan(
         apiKey ? apiKey : process.env.AUDITBASE_API_KEY
       }`,
     };
-    console.log(`headers: ${headers}`);
+    console.log(`headers: ${JSON.stringify(headers)}`);
     let res = await axios.get(url, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${
-          apiKey ? apiKey : process.env.AUDITBASE_API_KEY
-        }`,
-      },
+      headers,
     });
     if (res.status === 200) {
       return {
