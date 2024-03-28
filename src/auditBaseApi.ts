@@ -56,7 +56,7 @@ export async function sendExplorerScanRequest(
 }
 
 interface ScanResult {
-  result: Object;
+  result: string;
   numIssues: number;
   statusCode: number;
 }
@@ -65,8 +65,8 @@ function getNumIssues(issues: any) {
   return issues.length;
 }
 
-export function truncate(data: object) {
-  const str = JSON.stringify(data);
+export function truncate(data: string | object) {
+  const str = typeof data === "object" ? JSON.stringify(data) : data;
   if (str.length < 400) {
     return str;
   }
@@ -102,7 +102,8 @@ export async function getScan(
     });
     if (res.status === 200) {
       return {
-        result: res.data,
+        result:
+          typeof res.data === "string" ? res.data : JSON.stringify(res.data),
         statusCode: res.status,
         numIssues: getNumIssues(res.data),
       };
