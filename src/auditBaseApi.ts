@@ -20,6 +20,22 @@ async function getFileList() {
   }
 }
 
+async function getFile(fileId: string) {
+  try {
+    // Call the files.info API method with the fileId
+    const result = await client.files.info({ file: fileId });
+
+    // Extract the file object from the response
+    const file = result.file;
+
+    // Return the file object
+    return file;
+  } catch (error) {
+    console.error("Error fetching file:", error);
+    return null;
+  }
+}
+
 export async function sendExplorerScanRequest(
   chain_id: string,
   contract_address: string,
@@ -84,8 +100,11 @@ export async function getScan(
     console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
     const files = await getFileList();
-    for (const file in files) {
-      console.log(`${JSON.stringify(file)}`);
+    for (const file_name in files) {
+      console.log(`${JSON.stringify(file_name)}`);
+    }
+    if (files && files.length > 0) {
+      console.log(`file: ${JSON.stringify(files[0])}`);
     }
 
     let url = API_SERVER + ROUTE;
