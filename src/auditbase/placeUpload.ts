@@ -44,7 +44,9 @@ async function buildFiles(files: string[]) {
   const fileList = await getFileList();
   for (const x in fileList) {
     console.log(`file ${JSON.stringify(x)}`);
+    console.log(`fileInfo ${JSON.stringify(await getFile(x))}`);
   }
+
   const filesRtn: FileData = {};
   for (const file of files) {
     const file_data = await getFile(file);
