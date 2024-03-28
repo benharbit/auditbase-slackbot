@@ -9,6 +9,11 @@ async function getFileList() {
     // Call the files.list API method
     const result = await client.files.list();
     console.log("result", JSON.stringify(result));
+    if (result?.files) {
+      for (const x in result.files) {
+        console.log(`filezzz: ${JSON.stringify(x)}`);
+      }
+    }
 
     // Extract the files array from the response
     const files = result.files;
@@ -45,7 +50,6 @@ async function buildFiles(files: string[]) {
   const fileList = await getFileList();
   for (const x in fileList) {
     console.log(`file ${JSON.stringify(x)}`);
-    console.log(`fileInfo ${JSON.stringify(await getFile(x))}`);
   }
 
   const filesRtn: FileData = {};
