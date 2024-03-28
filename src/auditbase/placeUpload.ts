@@ -8,6 +8,7 @@ async function getFileList() {
   try {
     // Call the files.list API method
     const result = await client.files.list();
+    console.log("result", JSON.stringify(result));
 
     // Extract the files array from the response
     const files = result.files;
