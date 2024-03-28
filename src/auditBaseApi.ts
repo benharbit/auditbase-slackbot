@@ -53,7 +53,7 @@ function truncate(data: object) {
   }
 
   return (
-    str.slice(0, 400) + "..........." + str.slice(str.length - 400, str.length)
+    str.slice(0, 400) + "........." + str.slice(str.length - 400, str.length)
   );
 }
 
