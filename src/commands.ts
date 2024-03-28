@@ -135,11 +135,26 @@ const getScans =
         if (result.statusCode === 200) {
           const blocks = [
             {
-              type: "plain_text",
-              text: "Scan has been completed successfully",
+              type: "section",
+              text: {
+                type: "plain_text",
+                text: "Scan has been completed successfully",
+              },
             },
-            { type: `Number of issues: ${result.numIssues}` },
-            { type: `Truncated reports: ${result.result}` },
+            {
+              type: "section",
+              text: {
+                type: "plain_text",
+                text: `Number of issues: ${result.numIssues}`,
+              },
+            },
+            {
+              type: "section",
+              text: {
+                type: "plain_text",
+                text: `Truncated reports: ${result.result}`,
+              },
+            },
           ];
           await app.dm({
             user: command.user_id,
