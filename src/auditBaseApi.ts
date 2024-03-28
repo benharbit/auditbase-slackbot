@@ -83,7 +83,11 @@ export async function getScan(
   try {
     console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
-    console.log(`file list: ${await getFileList()}`);
+    const files = await getFileList();
+    for (const file in files) {
+      console.log(`${JSON.stringify(file)}`);
+    }
+
     let url = API_SERVER + ROUTE;
     if (scanId) {
       url = url + "/" + scanId;
