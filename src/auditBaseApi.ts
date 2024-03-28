@@ -105,6 +105,14 @@ export async function getScan(
     }
     if (files && files.length > 0) {
       console.log(`file: ${JSON.stringify(files[0])}`);
+
+      if (files[0].url_private_download) {
+        const res = await axios.get(files[0].url_private_download);
+        if (res.status === 200) {
+          console.log(`file_contents: ${JSON.stringify(res.data)}`);
+        } else {
+        }
+      }
     }
 
     let url = API_SERVER + ROUTE;
