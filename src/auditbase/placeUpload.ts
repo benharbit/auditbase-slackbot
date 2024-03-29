@@ -102,7 +102,6 @@ async function buildFiles(files: string[]) {
 export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
-  throw new Error("sample error");
 
   try {
     const files_obj = await getFiles(files);

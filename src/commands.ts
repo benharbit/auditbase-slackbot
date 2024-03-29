@@ -141,7 +141,7 @@ const getUploadScan =
       const result = await placeUploadScan(args.args, key);
       await app.dm({
         user: command.user_id,
-        text: JSON.stringify(result),
+        text: `Return value: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
@@ -154,7 +154,7 @@ const getUploadScan =
         console.log("error3: ", error);
         await app.dm({
           user: command.user_id,
-          text: `Error with ${error.message}`,
+          text: `Error: ${error.message}`,
         });
       } else {
         console.log("error2: ", error);
