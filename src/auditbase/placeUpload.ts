@@ -46,8 +46,8 @@ async function getFiles(fileNames: string[]) {
     }
 
     const rtnFiles: FileData = {};
-
-    fileNames.forEach(async (fileName) => {
+    for (let i = 0; i < fileNames.length; i++) {
+      const fileName = fileNames[i];
       if (!fileName) {
         throw Error("No file name provided");
       }
@@ -69,7 +69,7 @@ async function getFiles(fileNames: string[]) {
       } else {
         throw Error(`didn't find file ${fileName}`);
       }
-    });
+    }
     return rtnFiles;
   } catch (error) {
     console.error("Error fetching file list:");
@@ -77,33 +77,6 @@ async function getFiles(fileNames: string[]) {
   }
 }
 
-// Call the files.info API method with the fileId
-
-/*
-async function buildFiles(files: string[]) {
-  const fileList = await getFileList();
-  for (const x in fileList) {
-    console.log(`file ${JSON.stringify(x)}`);
-  }
-
-  const filesRtn: FileData = {};
-  for (const file of files) {
-    const file_data = await getFile(file);
-    if (!file_data || !file_data.url_private_download) {
-      throw new Error(`Error fetching file: ${file}`);
-    }
-    const res = await axios.get(file_data.url_private_download);
-    if (res.status === 200) {
-      filesRtn[file] = res.data;
-    } else {
-      throw new Error(
-        `Error downloads file: ${file_data.url_private_download}`
-      );
-    }
-  }
-  return filesRtn;
-}
-*/
 export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
