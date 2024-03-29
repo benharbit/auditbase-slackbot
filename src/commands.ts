@@ -154,7 +154,7 @@ const getUploadScan =
         console.log("error2: ", error);
         await app.dm({
           user: command.user_id,
-          text: JSON.stringify(error),
+          text: `error with ${JSON.stringify(error)}`,
         });
       }
     }
