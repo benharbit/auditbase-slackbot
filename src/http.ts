@@ -13,10 +13,8 @@ const truncateIssues = (data: Array<any>) => {
 
   return (
     JSON.stringify(data.slice(0, 1)) +
-    `\n.........${data.length - 2} issues in between.......\n` +
-    JSON.stringify(data.slice(data.length - 1, data.length)) +
-    "\n" +
-    `Total issues: ${data.length}`
+    `...............${data.length - 2} issues in between...........` +
+    JSON.stringify(data.slice(data.length - 1, data.length))
   );
 };
 
@@ -29,7 +27,9 @@ const webhookPrint = (data: any) => {
       scan_id: scanId,
       status: data["status"],
       truncated_issues: truncateIssues(issues),
-    })
+    }) +
+    "\n" +
+    `Num issues: ${data["result"]["issues"]}\n`
   );
 };
 export const createHandler = (props: { signingSecret: string }) =>
