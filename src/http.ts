@@ -36,7 +36,12 @@ export const addHttpHandlers = (args: {
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
     console.log(`webhook received`);
-
+    if (req.body["result"]) {
+      for (const x in req.body["result"]) {
+        console.log(`key: ${x}`);
+        //console.log("type of key: ", typeof req.body["result"][x]);
+      }
+    }
     for (const key in req.body) {
       console.log(`key: ${key}`);
       console.log("type of key: ", typeof req.body[key]);
