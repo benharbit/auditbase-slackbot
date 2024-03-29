@@ -36,9 +36,12 @@ export const addHttpHandlers = (args: {
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
     console.log(`webhook received`);
+
     for (const key in req.body) {
       console.log(`key: ${key}`);
+      console.log("type of key: ", typeof req.body[key]);
     }
+
     return res.send("OK");
     const hasAccess = token && args.allowedTokens.includes(token);
     if (!hasAccess) {
