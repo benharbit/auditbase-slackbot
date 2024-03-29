@@ -126,13 +126,8 @@ export async function placeUploadScan(files: string[], apiKey: string) {
     console.log(res_data);
     return res_data;
   } catch (error: Error | any) {
-    if (error instanceof Error) {
-      console.log("error1111");
-      throw error;
-    } else {
-      console.log("error22222");
-      throw new Error(JSON.stringify(error));
-    }
+    console.log("error123");
+    throw error;
     // console.log(error);
 
     // return "unknown error";
