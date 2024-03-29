@@ -1,7 +1,7 @@
 import { WebClient } from "@slack/web-api";
 import axios from "axios";
 import fs from "fs";
-const AUDITBASE_API_SERVER = new URL("/v1", process.env.AUDITBASE_API_SERVER);
+const AUDITBASE_API_SERVER = process.env.AUDITBASE_API_SERVER;
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
@@ -78,8 +78,8 @@ async function getFiles(fileNames: string[]) {
 }
 
 export async function placeUploadScan(files: string[], apiKey: string) {
-  const ROUTE = "scans/upload";
-  const url = new URL(ROUTE, AUDITBASE_API_SERVER);
+  const ROUTE = "/scans/upload";
+  const url = AUDITBASE_API_SERVER + ROUTE;
 
   try {
     const files_obj = await getFiles(files);
