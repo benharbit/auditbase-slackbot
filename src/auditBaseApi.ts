@@ -18,6 +18,8 @@ export async function placeExplorerScan(
   };
   try {
     console.log("url: ", url);
+    console.log("data: ", data);
+    console.log("zzz: ", apiKey ? apiKey : process.env.AUDITBASE_API_KEY);
     let res = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",
