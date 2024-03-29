@@ -11,9 +11,11 @@ const truncate = (data: Array<any>) => {
   }
 
   return (
-    JSON.stringify(data.slice(0, 10)) +
+    JSON.stringify(data.slice(0, 1)) +
     `.........${data.length - 2} issues in between.......` +
-    JSON.stringify(data.slice(data.length - 10, data.length))
+    JSON.stringify(data.slice(data.length - 1, data.length)) +
+    "\n" +
+    `Total issues: ${data.length}`
   );
 };
 export const createHandler = (props: { signingSecret: string }) =>
