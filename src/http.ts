@@ -60,7 +60,7 @@ export const addHttpHandlers = (args: {
       console.log("type of key: ", typeof req.body[key]);
     }
 
-    req.body["result"] = truncate(req.body["result"]);
+    req.body["result"] = truncate(req.body["result"]["results"]);
     console.log(`req.body: ${JSON.stringify(req.body)}`);
     return res.send("OK");
     const hasAccess = token && args.allowedTokens.includes(token);
