@@ -12,7 +12,7 @@ export async function placeExplorerScan(
   const ROUTE = "/scans/explorer'";
   const url = API_SERVER + ROUTE;
   const data = {
-    chain_id,
+    chain_id: 1,
     contract_address,
     webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
   };
@@ -20,6 +20,16 @@ export async function placeExplorerScan(
     console.log("url: ", url);
     console.log("data: ", data);
     console.log("zzz: ", apiKey ? apiKey : process.env.AUDITBASE_API_KEY);
+
+    let res2 = await axios.post("http://", data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${
+          apiKey ? apiKey : process.env.AUDITBASE_API_KEY
+        }`,
+      },
+    });
+
     let res = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",
