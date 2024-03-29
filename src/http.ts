@@ -3,6 +3,17 @@ import { ChatBot } from "./types";
 import express from "express";
 import { ExpressReceiver } from "@slack/bolt";
 
+const truncate = (data: Array<any>) => {
+  if (data.length < 10) {
+    return JSON.stringify(data);
+  }
+
+  return (
+    JSON.stringify(data.slice(0, 10)) +
+    `.........${data.length - 2} issues in between.......` +
+    JSON.stringify(data.slice(data.length - 10, data.length))
+  );
+};
 export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
 
@@ -47,6 +58,8 @@ export const addHttpHandlers = (args: {
       console.log("type of key: ", typeof req.body[key]);
     }
 
+    req.body["result"] = truncate(req.body["result"]);
+    console.log(`req.body: ${JSON.stringify(req.body)}`);
     return res.send("OK");
     const hasAccess = token && args.allowedTokens.includes(token);
     if (!hasAccess) {
