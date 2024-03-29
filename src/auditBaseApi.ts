@@ -1,6 +1,6 @@
 import axios from "axios";
 import { WebClient } from "@slack/web-api";
-const API_SERVER = "https://api.auditbase.dev/v1/";
+const API_SERVER = process.env.AUDITBASE_API_SERVER;
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 

@@ -1,7 +1,7 @@
-import { AUDITBASE_API_SERVER } from "../constants";
 import { WebClient } from "@slack/web-api";
 import axios from "axios";
 import fs from "fs";
+const AUDITBASE_API_SERVER = new URL("/v1", process.env.AUDITBASE_API_SERVER);
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
@@ -9,13 +9,13 @@ async function getFileList() {
   try {
     // Call the files.list API method
     /*
-                const uploadResult = await client.files.upload({
-                  channels: "#auditbase-dev",
-                  file: fs.createReadStream("./README.md"),
-                });
-                
-                console.log("uploadResult", JSON.stringify(uploadResult));
-                */
+                    const uploadResult = await client.files.upload({
+                      channels: "#auditbase-dev",
+                      file: fs.createReadStream("./README.md"),
+                    });
+                    
+                    console.log("uploadResult", JSON.stringify(uploadResult));
+                    */
     const result = await client.files.list({ channel: "D06RQD9064A" });
     if (result?.files) {
       result.files.forEach((x: any) => {
@@ -79,7 +79,7 @@ async function getFiles(fileNames: string[]) {
 
 export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
-  const url = AUDITBASE_API_SERVER + ROUTE;
+  const url = new URL(ROUTE, AUDITBASE_API_SERVER);
 
   try {
     const files_obj = await getFiles(files);
@@ -92,7 +92,7 @@ export async function placeUploadScan(files: string[], apiKey: string) {
       },
     };
 
-    let res = await axios.post(url, post_data, {
+    let res = await axios.post(url.toString(), post_data, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${

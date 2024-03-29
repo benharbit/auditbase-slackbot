@@ -101,6 +101,20 @@ const getExplorerScan =
         console.log("chainId: ", strs[0]);
         console.log("address: ", strs[1]);
         const result = await placeExplorerScan(strs[0], strs[1], apiKey);
+        await app.dm({
+          user: command.user_id,
+          blocks: [
+            {
+              type: "section",
+              text: {
+                type: "mrkdwn",
+                text:
+                  '<span style="color:green">Scan has been submitted successfully. \n ' +
+                  `Scan submission result: ${JSON.stringify(result)} </span>`,
+              },
+            },
+          ],
+        });
         console.log("result: ", result);
       }
     } catch (error) {
