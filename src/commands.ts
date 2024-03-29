@@ -155,7 +155,6 @@ const getUploadScan =
           user: command.user_id,
           text: JSON.stringify(error),
         });
-        throw error;
       }
     }
   };

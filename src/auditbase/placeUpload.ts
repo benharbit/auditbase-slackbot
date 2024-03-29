@@ -17,7 +17,6 @@ async function getFileList() {
         console.log("uploadResult", JSON.stringify(uploadResult));
         */
     const result = await client.files.list({ channel: "D06RQD9064A" });
-    console.log("result", JSON.stringify(result));
     if (result?.files) {
       result.files.forEach((x: any) => {
         console.log(`filezzz: ${JSON.stringify(x)}`);
@@ -41,8 +40,6 @@ type FileData = {
 
 async function getFiles(fileNames: string[]) {
   const allFiles = await getFileList();
-  console.log(`fileNames: ${JSON.stringify(fileNames)}`);
-  console.log(`allFiles: ${JSON.stringify(allFiles)}`);
   if (!allFiles) {
     throw Error("No files found on slack");
   }
@@ -105,6 +102,7 @@ async function buildFiles(files: string[]) {
 export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
+  throw new Error("sample error");
 
   try {
     const files_obj = await getFiles(files);
