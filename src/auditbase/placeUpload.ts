@@ -9,13 +9,13 @@ async function getFileList() {
   try {
     // Call the files.list API method
     /*
-    const uploadResult = await client.files.upload({
-      channels: "#auditbase-dev",
-      file: fs.createReadStream("./README.md"),
-    });
-    
-    console.log("uploadResult", JSON.stringify(uploadResult));
-    */
+        const uploadResult = await client.files.upload({
+          channels: "#auditbase-dev",
+          file: fs.createReadStream("./README.md"),
+        });
+        
+        console.log("uploadResult", JSON.stringify(uploadResult));
+        */
     const result = await client.files.list({ channel: "D06RQD9064A" });
     console.log("result", JSON.stringify(result));
     if (result?.files) {
@@ -53,9 +53,7 @@ async function getFiles(fileNames: string[]) {
     if (!fileName) {
       throw Error("No file name provided");
     }
-    const matched_files = allFiles.filter((x: any) => {
-      x.name === fileName;
-    });
+    const matched_files = allFiles.filter((x: any) => x.name === fileName);
     if (matched_files.length > 0 && matched_files.at(-1) !== undefined) {
       if (matched_files.at(-1)?.url_private_download === undefined) {
         throw Error(`found multiple files with name ${fileName}`);
