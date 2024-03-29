@@ -55,7 +55,7 @@ export const addHttpHandlers = (args: {
         //console.log("type of key: ", typeof req.body["result"][x]);
       }
     }
-    for (const key in req.body) {
+    for (const key in req.body["result"]) {
       console.log(`key: ${key}`);
       console.log("type of key: ", typeof req.body[key]);
     }
