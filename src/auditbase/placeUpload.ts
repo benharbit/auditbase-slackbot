@@ -32,26 +32,47 @@ async function getFileList() {
   }
 }
 
-async function getFile(fileId: string) {
-  try {
-    // Call the files.info API method with the fileId
-    const result = await client.files.info({ file: fileId });
-
-    // Extract the file object from the response
-    const file = result.file;
-
-    // Return the file object
-    return file;
-  } catch (error) {
-    console.error("Error fetching file:", error);
-    return null;
-  }
-}
-
 type FileData = {
   [key: string]: string;
 };
 
+async function getFiles(fileNames: string[]) {
+  const allFiles = await getFileList();
+  if (!allFiles) {
+    throw Error("No files found on slack");
+  }
+
+  const rtnFiles: FileData = {};
+
+  fileNames.forEach(async (fileName) => {
+    if (!fileName) {
+      throw Error("No file name provided");
+    }
+    const matched_files = allFiles.filter((x: any) => {
+      x.name === fileName;
+    });
+    if (matched_files.length > 0 && matched_files.at(-1) !== undefined) {
+      if (matched_files.at(-1)?.url_private_download === undefined) {
+        throw Error(`found multiple files with name ${fileName}`);
+      }
+
+      const results = await axios.get(
+        matched_files.at(-1)!.url_private_download!
+      );
+      if (results.status !== 200) {
+        throw Error(`Error downloading file ${fileName}`);
+      }
+      rtnFiles[fileName] = results.data;
+    } else {
+      throw Error(`didn't find file ${fileName}`);
+    }
+  });
+  return rtnFiles;
+}
+
+// Call the files.info API method with the fileId
+
+/*
 async function buildFiles(files: string[]) {
   const fileList = await getFileList();
   for (const x in fileList) {
@@ -75,12 +96,13 @@ async function buildFiles(files: string[]) {
   }
   return filesRtn;
 }
+*/
 export async function placeUploadScan(files: string[], apiKey: string) {
   const ROUTE = "scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
 
   try {
-    const files_obj = await buildFiles(files);
+    const files_obj = await getFiles(files);
     console.log(`files_obj: ${JSON.stringify(files_obj)}`);
 
     const post_data = {

@@ -147,6 +147,10 @@ const getUploadScan =
           text: (error as MessageError).message,
         });
       } else {
+        await app.dm({
+          user: command.user_id,
+          text: JSON.stringify(error),
+        });
         throw error;
       }
     }
