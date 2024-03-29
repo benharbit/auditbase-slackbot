@@ -41,6 +41,8 @@ type FileData = {
 
 async function getFiles(fileNames: string[]) {
   const allFiles = await getFileList();
+  console.log(`fileNames: ${JSON.stringify(fileNames)}`);
+  console.log(`allFiles: ${JSON.stringify(allFiles)}`);
   if (!allFiles) {
     throw Error("No files found on slack");
   }
