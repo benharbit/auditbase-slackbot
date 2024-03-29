@@ -13,7 +13,7 @@ const truncateIssues = (data: Array<any>) => {
 
   return (
     JSON.stringify(data.slice(0, 1)) +
-    `.........${data.length - 2} issues in between.......` +
+    `\n.........${data.length - 2} issues in between.......\n` +
     JSON.stringify(data.slice(data.length - 1, data.length)) +
     "\n" +
     `Total issues: ${data.length}`
@@ -23,10 +23,14 @@ const truncateIssues = (data: Array<any>) => {
 const webhookPrint = (data: any) => {
   const issues = data["result"]["issues"];
   const scanId = data["scan_id"];
-  return JSON.stringify({
-    scan_id: scanId,
-    truncated_issues: truncateIssues(issues),
-  });
+  return (
+    "Webhook Results: \n" +
+    JSON.stringify({
+      scan_id: scanId,
+      status: data["status"],
+      truncated_issues: truncateIssues(issues),
+    })
+  );
 };
 export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
