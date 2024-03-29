@@ -109,8 +109,8 @@ const getExplorerScan =
               text: {
                 type: "mrkdwn",
                 text:
-                  '<span style="color:green">Scan has been submitted successfully. \n ' +
-                  `Scan submission result: ${JSON.stringify(result)} </span>`,
+                  "Scan has been submitted successfully. \n " +
+                  `Scan submission result: ${JSON.stringify(result)}`,
               },
             },
           ],
