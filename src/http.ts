@@ -35,7 +35,7 @@ export const addHttpHandlers = (args: {
   });
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
-    console.log(`webhook received: ${JSON.stringify(req)}`);
+    console.log(`webhook received`);
     for (const key in req.body) {
       console.log(`key: ${key}`);
     }
