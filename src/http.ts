@@ -1,4 +1,5 @@
 import { ChatBot } from "./types";
+import { userRecords } from "./constants";
 
 import express from "express";
 import { ExpressReceiver } from "@slack/bolt";
@@ -64,7 +65,18 @@ export const addHttpHandlers = (args: {
 
     req.body["result"] = truncate(req.body["result"]["results"]);
     console.log(`req.body: ${JSON.stringify(req.body)}`);
-    return res.send("OK");
+
+    args.app.dm({
+      user: args.dmChannel,
+      text: "/secret-page got a get request",
+    });
+
+    const found_records = userRecords.filter(
+      (user) => user === req.body["scan_id"]
+    );
+    if (found_records.length > 0) {
+    }
+
     const hasAccess = token && args.allowedTokens.includes(token);
     if (!hasAccess) {
       console.log(`Attempted accessing POST webhook without valid token`);
