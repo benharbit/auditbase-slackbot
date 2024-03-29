@@ -114,6 +114,9 @@ const getExplorerScan =
               },
             },
           ],
+          text: `Explorer Scan submission result: ${JSON.stringify(
+            result
+          )} </span>`,
         });
         console.log("result: ", result);
       }
