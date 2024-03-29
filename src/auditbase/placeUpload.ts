@@ -39,37 +39,41 @@ type FileData = {
 };
 
 async function getFiles(fileNames: string[]) {
-  const allFiles = await getFileList();
-  if (!allFiles) {
-    throw Error("No files found on slack");
+  try {
+    const allFiles = await getFileList();
+    if (!allFiles) {
+      throw Error("No files found on slack");
+    }
+
+    const rtnFiles: FileData = {};
+
+    fileNames.forEach(async (fileName) => {
+      if (!fileName) {
+        throw Error("No file name provided");
+      }
+      const matched_files = allFiles.filter((x: any) => x.name === fileName);
+      if (matched_files.length > 0 && matched_files.at(-1) !== undefined) {
+        if (matched_files.at(-1)?.url_private_download === undefined) {
+          throw Error(`found multiple files with name ${fileName}`);
+        }
+        console.log("fffffff");
+
+        const results = await axios.get(
+          matched_files.at(-1)!.url_private_download!
+        );
+        if (results.status !== 200) {
+          throw Error(`Error downloading file ${fileName}`);
+        }
+        console.log("results.data", results.data);
+        rtnFiles[fileName] = results.data;
+      } else {
+        throw Error(`didn't find file ${fileName}`);
+      }
+    });
+    return rtnFiles;
+  } catch (error) {
+    throw error;
   }
-
-  const rtnFiles: FileData = {};
-
-  fileNames.forEach(async (fileName) => {
-    if (!fileName) {
-      throw Error("No file name provided");
-    }
-    const matched_files = allFiles.filter((x: any) => x.name === fileName);
-    if (matched_files.length > 0 && matched_files.at(-1) !== undefined) {
-      if (matched_files.at(-1)?.url_private_download === undefined) {
-        throw Error(`found multiple files with name ${fileName}`);
-      }
-      console.log("fffffff");
-
-      const results = await axios.get(
-        matched_files.at(-1)!.url_private_download!
-      );
-      if (results.status !== 200) {
-        throw Error(`Error downloading file ${fileName}`);
-      }
-      console.log("results.data", results.data);
-      rtnFiles[fileName] = results.data;
-    } else {
-      throw Error(`didn't find file ${fileName}`);
-    }
-  });
-  return rtnFiles;
 }
 
 // Call the files.info API method with the fileId
