@@ -79,7 +79,7 @@ export const addHttpHandlers = (args: {
     console.log(`req.body: ${JSON.stringify(req.body)}`);
     console.log(`asdjkfa;dsf ${args.dmChannel}`);
     args.app.dm({
-      user: args.dmChannel,
+      user: "D06RQD9064A",
       text: webhookPrint(req.body),
     });
 
