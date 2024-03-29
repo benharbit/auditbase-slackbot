@@ -9,13 +9,13 @@ async function getFileList() {
   try {
     // Call the files.list API method
     /*
-            const uploadResult = await client.files.upload({
-              channels: "#auditbase-dev",
-              file: fs.createReadStream("./README.md"),
-            });
-            
-            console.log("uploadResult", JSON.stringify(uploadResult));
-            */
+                const uploadResult = await client.files.upload({
+                  channels: "#auditbase-dev",
+                  file: fs.createReadStream("./README.md"),
+                });
+                
+                console.log("uploadResult", JSON.stringify(uploadResult));
+                */
     const result = await client.files.list({ channel: "D06RQD9064A" });
     if (result?.files) {
       result.files.forEach((x: any) => {
@@ -127,8 +127,10 @@ export async function placeUploadScan(files: string[], apiKey: string) {
     return res_data;
   } catch (error: Error | any) {
     if (error instanceof Error) {
+      console.log("error1111");
       throw error;
     } else {
+      console.log("error22222");
       throw new Error(JSON.stringify(error));
     }
     // console.log(error);
