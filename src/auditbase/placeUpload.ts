@@ -72,6 +72,7 @@ async function getFiles(fileNames: string[]) {
     });
     return rtnFiles;
   } catch (error) {
+    console.error("Error fetching file list:");
     throw error;
   }
 }
