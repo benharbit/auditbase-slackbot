@@ -32,7 +32,7 @@ export const addHttpHandlers = (args: {
   });
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
-    console.log(`req.query: ${JSON.stringify(req.query)}`);
+    console.log(`webhook received: ${JSON.stringify(req.query)}`);
     const hasAccess = token && args.allowedTokens.includes(token);
     if (!hasAccess) {
       console.log(`Attempted accessing POST webhook without valid token`);
