@@ -4,6 +4,8 @@ import express from "express";
 import { ExpressReceiver } from "@slack/bolt";
 
 const truncate = (data: Array<any>) => {
+  console.log("is array", data instanceof Array);
+  console.log("type of ", typeof data);
   if (data.length < 10) {
     return JSON.stringify(data);
   }
