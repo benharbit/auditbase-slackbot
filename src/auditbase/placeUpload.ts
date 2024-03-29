@@ -58,6 +58,7 @@ async function getFiles(fileNames: string[]) {
       if (matched_files.at(-1)?.url_private_download === undefined) {
         throw Error(`found multiple files with name ${fileName}`);
       }
+      console.log("fffffff");
 
       const results = await axios.get(
         matched_files.at(-1)!.url_private_download!
@@ -65,6 +66,7 @@ async function getFiles(fileNames: string[]) {
       if (results.status !== 200) {
         throw Error(`Error downloading file ${fileName}`);
       }
+      console.log("results.data", results.data);
       rtnFiles[fileName] = results.data;
     } else {
       throw Error(`didn't find file ${fileName}`);
