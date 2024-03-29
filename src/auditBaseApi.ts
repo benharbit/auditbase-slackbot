@@ -29,14 +29,14 @@ export async function placeExplorerScan(
       },
     });
     const res_data = res.data;
-    console.log(res_data);
+    console.log("responseaa: ", res_data);
     return res_data;
   } catch (error: Error | any) {
     if (error.message) {
       console.error(error.message);
       return error.message;
     }
-    console.log(error);
+    console.log("response fialed2: ", error);
 
     return "unknown error";
   }
