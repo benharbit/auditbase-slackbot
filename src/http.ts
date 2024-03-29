@@ -4,7 +4,7 @@ import { userRecords } from "./constants";
 import express from "express";
 import { ExpressReceiver } from "@slack/bolt";
 
-const truncate = (data: Array<any>) => {
+const truncateIssues = (data: Array<any>) => {
   console.log("is array", data instanceof Array);
   console.log("type of ", typeof data);
   if (data.length < 10) {
@@ -18,6 +18,15 @@ const truncate = (data: Array<any>) => {
     "\n" +
     `Total issues: ${data.length}`
   );
+};
+
+const webhookPrint = (data: any) => {
+  const issues = data["result"]["issues"];
+  const scanId = data["scan_id"];
+  return JSON.stringify({
+    scan_id: scanId,
+    truncated_issues: truncateIssues(issues),
+  });
 };
 export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
@@ -63,19 +72,18 @@ export const addHttpHandlers = (args: {
       console.log("type of key: ", typeof req.body[key]);
     }
 
-    req.body["result"] = truncate(req.body["result"]["results"]);
     console.log(`req.body: ${JSON.stringify(req.body)}`);
 
     args.app.dm({
       user: args.dmChannel,
-      text: "/secret-page got a get request",
+      text: webhookPrint(req.body),
     });
 
     const found_records = userRecords.filter(
       (user) => user === req.body["scan_id"]
     );
-    if (found_records.length > 0) {
-    }
+
+    return res.send("OK");
 
     const hasAccess = token && args.allowedTokens.includes(token);
     if (!hasAccess) {
