@@ -29,7 +29,7 @@ const webhookPrint = (data: any) => {
       truncated_issues: truncateIssues(issues),
     }) +
     "\n" +
-    `Num issues: ${data["result"]["issues"]}\n`
+    `Num issues: ${data?.result?.issues?.length}\n`
   );
 };
 export const createHandler = (props: { signingSecret: string }) =>
