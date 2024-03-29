@@ -9,7 +9,7 @@ export async function placeExplorerScan(
   contract_address: string,
   apiKey: string
 ) {
-  const ROUTE = "/scans/explorer'";
+  const ROUTE = "/scans/explorer";
   const url = API_SERVER + ROUTE;
   const data = {
     chain_id,
