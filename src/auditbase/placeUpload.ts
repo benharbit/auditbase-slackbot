@@ -8,12 +8,15 @@ const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 async function getFileList() {
   try {
     // Call the files.list API method
+    /*
     const uploadResult = await client.files.upload({
       channels: "#auditbase-dev",
       file: fs.createReadStream("./README.md"),
     });
+    
     console.log("uploadResult", JSON.stringify(uploadResult));
-    const result = await client.files.list();
+    */
+    const result = await client.files.list({ channel: "D06RQD9064A" });
     console.log("result", JSON.stringify(result));
     if (result?.files) {
       result.files.forEach((x: any) => {
