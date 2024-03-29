@@ -12,10 +12,13 @@ export const addHttpHandlers = (args: {
   allowedTokens: string[];
   dmChannel: string;
 }) => {
-  args.receiver.router.use(express.json());
-  args.receiver.router.use(express.urlencoded({ extended: true }));
+  args.receiver.router.use(express.json({ limit: "50mb" }));
+  args.receiver.router.use(
+    express.urlencoded({ extended: true, limit: "50mb" })
+  );
   args.receiver.router.get("/secret-page", (req, res) => {
     console.log(`req.query: ${JSON.stringify(req.query)}`);
+
     const token = req.query.token as string;
 
     const hasAccess = token && args.allowedTokens.includes(token);

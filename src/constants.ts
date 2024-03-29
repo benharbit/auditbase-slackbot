@@ -1,1 +1,5 @@
-// define constants here
+type UserRecord = {
+  username: string;
+  scanid: string;
+};
+export const userRecords: UserRecord[] = [];
