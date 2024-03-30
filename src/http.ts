@@ -72,9 +72,10 @@ export const addHttpHandlers = (args: {
       }
     } else if (req.body["issues"]) {
       //branch from aiscan
+      const rtnVal = "AI Scan Results: \n" + JSON.stringify(req.body["issues"]);
       args.app.dm({
         user: "D06RQD9064A",
-        text: JSON.stringify(req.body),
+        text: JSON.stringify(rtnVal),
       });
       return res.send("OK");
       return;
