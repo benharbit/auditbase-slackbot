@@ -70,14 +70,16 @@ export const addHttpHandlers = (args: {
         console.log(`key: ${x}`);
         //console.log("type of key: ", typeof req.body["result"][x]);
       }
-    }
-    for (const key in req.body["result"]) {
-      console.log(`key: ${key}`);
-      console.log("type of key: ", typeof req.body[key]);
+    } else if (req.body["issues"]) {
+      //branch from aiscan
+      args.app.dm({
+        user: "D06RQD9064A",
+        text: JSON.stringify(req.body),
+      });
+      return res.send("OK");
+      return;
     }
 
-    console.log(`req.body: ${JSON.stringify(req.body)}`);
-    console.log(`asdjkfa;dsf ${args.dmChannel}`);
     args.app.dm({
       user: "D06RQD9064A",
       text: webhookPrint(req.body),
