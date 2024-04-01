@@ -111,3 +111,24 @@ export const addHttpHandlers = (args: {
     res.send(`Super`);
   });
 };
+
+export const addEventHandler = (args: {
+  app: ChatBot;
+  receiver: ExpressReceiver;
+  allowedTokens: string[];
+  dmChannel: string;
+}) => {
+  args.receiver.router.use(express.json({ limit: "50mb" }));
+  args.receiver.router.use(
+    express.urlencoded({ extended: true, limit: "50mb" })
+  );
+  args.receiver.router.get("/slack-events", (req, res) => {
+    console.log(`req.query: ${JSON.stringify(req.query)}`);
+    const rtnText = "received slack event: " + JSON.stringify(req.query);
+    args.app.dm({
+      user: "D06RQD9064A",
+      text: rtnText,
+    });
+    return res.send("OK");
+  });
+};
