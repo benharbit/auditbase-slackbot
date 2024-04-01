@@ -3,6 +3,7 @@ import { userRecords } from "./constants";
 
 import express from "express";
 import { ExpressReceiver } from "@slack/bolt";
+import { fileUploads } from "./constants";
 
 const truncateIssues = (data: Array<any>) => {
   console.log("is array", data instanceof Array);
@@ -64,8 +65,20 @@ export const addHttpHandlers = (args: {
   });
 
   args.receiver.router.post("/slack-events", (req, res) => {
+    const eventType = req.body.event?.type;
     if (req.body.type === "url_verification") {
       return res.send({ challenge: req.body.challenge });
+    }
+
+    if (eventType === "file_shared") {
+      const fileId = req.body.event?.file_id;
+      if (fileId) {
+        fileUploads.push({
+          fileId,
+          timestamp: Date.now(),
+          fileName: "",
+        });
+      }
     }
 
     const rtnText = "received slack event: " + JSON.stringify(req.body);

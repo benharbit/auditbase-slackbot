@@ -1,21 +1,13 @@
 import { WebClient } from "@slack/web-api";
 import axios from "axios";
-import fs from "fs";
+import { fileUploads } from "../constants";
+
 const AUDITBASE_API_SERVER = process.env.AUDITBASE_API_SERVER;
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
 async function getFileList() {
   try {
-    // Call the files.list API method
-    /*
-                    const uploadResult = await client.files.upload({
-                      channels: "#auditbase-dev",
-                      file: fs.createReadStream("./README.md"),
-                    });
-                    
-                    console.log("uploadResult", JSON.stringify(uploadResult));
-                    */
     const result = await client.files.list({ channel: "D06RQD9064A" });
     if (result?.files) {
       result.files.forEach((x: any) => {
@@ -34,9 +26,16 @@ async function getFileList() {
   }
 }
 
+type FileInfo = {
+  fileId: string;
+  content: string;
+};
+
 type FileData = {
   [key: string]: string;
 };
+
+export const getUploadedFiles = async (allFiles: FileInfo[]) => {};
 
 export async function getFiles(fileNames: string[]) {
   try {
