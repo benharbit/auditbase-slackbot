@@ -68,7 +68,7 @@ export const addHttpHandlers = (args: {
       return res.send({ challenge: req.body.challenge });
     }
 
-    const rtnText = "received slack event: " + JSON.stringify(req.query);
+    const rtnText = "received slack event: " + JSON.stringify(req.body);
     args.app.dm({
       user: "D06RQD9064A",
       text: rtnText,
