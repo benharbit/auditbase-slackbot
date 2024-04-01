@@ -62,6 +62,20 @@ export const addHttpHandlers = (args: {
     });
     res.send(`Super`);
   });
+
+  args.receiver.router.post("/slack-events", (req, res) => {
+    if (req.body.type === "url_verification") {
+      return res.send({ challenge: req.body.challenge });
+    }
+
+    const rtnText = "received slack event: " + JSON.stringify(req.query);
+    args.app.dm({
+      user: "D06RQD9064A",
+      text: rtnText,
+    });
+    return res.send({ challenge: req.body.challenge });
+  });
+
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
     console.log(`webhook received`);
@@ -123,7 +137,10 @@ export const addEventHandler = (args: {
     express.urlencoded({ extended: true, limit: "50mb" })
   );
   args.receiver.router.post("/slack-events", (req, res) => {
-    console.log(`req.query: ${JSON.stringify(req.body)}`);
+    if (req.body.type === "url_verification") {
+      return res.send({ challenge: req.body.challenge });
+    }
+
     const rtnText = "received slack event: " + JSON.stringify(req.query);
     args.app.dm({
       user: "D06RQD9064A",

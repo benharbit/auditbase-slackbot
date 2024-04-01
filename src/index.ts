@@ -31,7 +31,8 @@ const getFileList = async () => {
 app.event("file");
 addSlashCommands(app);
 addEvents(app);
-addEventHandler({
+
+addHttpHandlers({
   app,
   receiver,
   allowedTokens: [process.env.WEBHOOK_TOKEN!],
