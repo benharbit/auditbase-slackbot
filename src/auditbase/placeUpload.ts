@@ -65,6 +65,7 @@ async function getFiles(fileNames: string[]) {
     }
 
     const result2222 = await client.search.files({
+      token: process.env.SLACK_BOT_TOKEN,
       query: fileNames[0],
       sort: "timestamp",
       sort_dir: "desc",
