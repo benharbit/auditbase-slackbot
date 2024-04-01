@@ -6,6 +6,7 @@ import { getFaceQuiz } from "./quiz";
 import { fetchUsers } from "./data";
 import { placeExplorerScan, getScan, truncate } from "./auditBaseApi";
 import { placeUploadScan } from "./auditbase/placeUpload";
+import { placeAiScan } from "./auditbase/aiScan";
 
 const getFaceQuizCommand =
   (app: ChatBot) =>
@@ -183,6 +184,57 @@ const getUploadScan =
     }
   };
 
+const getAiScan =
+  (app: ChatBot) =>
+  async ({
+    command,
+    ack,
+    say,
+  }: {
+    command: SlashCommand;
+    ack: AckFn<string | RespondArguments>;
+    say: SayFn;
+  }) => {
+    console.log("command: ", command);
+    console.log("ack: ", ack);
+    console.log("says: ", say);
+
+    const WEBHOOK_URL =
+      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+
+    try {
+      await ack();
+      const args = parseCommand(command.text);
+      const key = args.apiKey || process.env.AUDITBASE_API_KEY || "";
+
+      const result = await placeAiScan(args.args[0], key);
+      await app.dm({
+        user: command.user_id,
+        text: `Return value: ${JSON.stringify(result)}`,
+      });
+    } catch (error) {
+      if (error instanceof MessageError) {
+        console.log("error: ", error);
+        await app.dm({
+          user: command.user_id,
+          text: (error as MessageError).message,
+        });
+      } else if (error instanceof Error) {
+        console.log("error3: ", error);
+        await app.dm({
+          user: command.user_id,
+          text: `Error: ${error.message}`,
+        });
+      } else {
+        console.log("error2: ", error);
+        await app.dm({
+          user: command.user_id,
+          text: `error with ${JSON.stringify(error)}`,
+        });
+      }
+    }
+  };
+
 const getScans =
   (app: ChatBot) =>
   async ({
@@ -274,4 +326,5 @@ export const addSlashCommands = (app: ChatBot) => {
   app.command("/scans-explorer", getExplorerScan(app));
   app.command("/scans", getScans(app));
   app.command("/scans-upload", getUploadScan(app));
+  app.command("/scans-ai", getUploadScan(app));
 };
