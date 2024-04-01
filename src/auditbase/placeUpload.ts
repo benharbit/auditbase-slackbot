@@ -16,7 +16,10 @@ async function getFileList() {
                     
                     console.log("uploadResult", JSON.stringify(uploadResult));
                     */
-    const result = await client.files.list({ channel: "D06RQD9064A" });
+    const result = await client.files.list({
+      channel: "D06RQD9064A",
+      show_files_hidden_by_limit: true,
+    });
     for (const x in result) {
       console.log(`file_fields: ${JSON.stringify(x)}`);
     }
@@ -31,9 +34,11 @@ async function getFileList() {
       console.log(`response_metadata: ${JSON.stringify(x)}`);
     }
 
+    console.log(`num files: ${JSON.stringify(result?.files?.length)}`);
+
     if (result?.files) {
       result.files.forEach((x: any) => {
-        console.log(`filezzz: ${JSON.stringify(x)}`);
+        console.log(`filea: ${JSON.stringify(x)}`);
       });
     }
 
