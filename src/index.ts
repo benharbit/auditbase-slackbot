@@ -35,7 +35,7 @@ addEventHandler({
   app,
   receiver,
   allowedTokens: [process.env.WEBHOOK_TOKEN!],
-  dmChannel: process.env.SLACK_WEBHOOK_CHANNEL || "#random",
+  dmChannel: "D06RQD9064A" || "#random",
 });
 
 (async () => {
