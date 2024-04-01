@@ -3,7 +3,7 @@ require("dotenv").config();
 import { createApp } from "./app";
 import { addEvents } from "./events";
 import { addSlashCommands } from "./commands";
-import { createHandler, addHttpHandlers } from "./http";
+import { createHandler, addHttpHandlers, addEventHandler } from "./http";
 import { WebClient } from "@slack/web-api";
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
@@ -31,7 +31,7 @@ const getFileList = async () => {
 app.event("file");
 addSlashCommands(app);
 addEvents(app);
-addHttpHandlers({
+addEventHandler({
   app,
   receiver,
   allowedTokens: [process.env.WEBHOOK_TOKEN!],
