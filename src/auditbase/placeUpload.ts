@@ -22,8 +22,10 @@ async function getFileList() {
     }
 
     for (const x in result?.paging) {
-      console.log(`paging: ${JSON.stringify(x)}`);
+      console.log(`paging: ${JSON.stringify(x)}: `);
     }
+
+    console.log(`${JSON.stringify(result?.paging)}`);
 
     for (const x in result?.response_metadata) {
       console.log(`response_metadata: ${JSON.stringify(x)}`);
