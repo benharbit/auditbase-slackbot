@@ -17,6 +17,9 @@ async function getFileList() {
                     console.log("uploadResult", JSON.stringify(uploadResult));
                     */
     const result = await client.files.list({ channel: "D06RQD9064A" });
+    for (const x in result) {
+      console.log(`filezzz: ${JSON.stringify(x)}`);
+    }
     if (result?.files) {
       result.files.forEach((x: any) => {
         console.log(`filezzz: ${JSON.stringify(x)}`);
