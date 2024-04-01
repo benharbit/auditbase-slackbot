@@ -36,12 +36,12 @@ const handle_file_upload = (app: ChatBot) => {
   app.action("file_upload", async ({ ack, say, action, body }) => {
     await ack();
 
-    console.log("file uploaded", console.log(JSON.stringify(action)));
-    console.log("file uploaded", console.log(JSON.stringify(body)));
+    // console.log("file uploaded", console.log(JSON.stringify(action)));
+    // console.log("file uploaded", console.log(JSON.stringify(body)));
   });
 };
 
 export const addEvents = (app: ChatBot) => {
   addNameGuessEventHandler(app);
-  handle_file_upload(app);
+  //handle_file_upload(app);
 };
