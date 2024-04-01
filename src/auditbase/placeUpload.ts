@@ -64,6 +64,13 @@ async function getFiles(fileNames: string[]) {
       throw Error("No files found on slack");
     }
 
+    const result2222 = await client.search.files({
+      query: fileNames[0],
+      sort: "timestamp",
+      sort_dir: "desc",
+    });
+    console.log(`search results: ${JSON.stringify(result2222)}`);
+
     const rtnFiles: FileData = {};
     for (let i = 0; i < fileNames.length; i++) {
       const fileName = fileNames[i];
