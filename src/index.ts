@@ -28,6 +28,7 @@ const getFileList = async () => {
   });
 };
 
+app.event("file");
 addSlashCommands(app);
 addEvents(app);
 addHttpHandlers({

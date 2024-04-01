@@ -70,7 +70,7 @@ export const addHttpHandlers = (args: {
         console.log(`key: ${x}`);
         //console.log("type of key: ", typeof req.body["result"][x]);
       }
-    } else if (req.body["issues"]) {
+    } else if (req?.body?.issues) {
       //branch from aiscan
       const rtnVal =
         "Webhook AI Scan Results Received: \n" +
@@ -80,6 +80,9 @@ export const addHttpHandlers = (args: {
         text: JSON.stringify(rtnVal),
       });
       return res.send("OK");
+    } else {
+      console.log("no issues found");
+      console.log("req.body", req.body);
     }
 
     args.app.dm({
