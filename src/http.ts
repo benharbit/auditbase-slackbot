@@ -123,7 +123,7 @@ export const addEventHandler = (args: {
     express.urlencoded({ extended: true, limit: "50mb" })
   );
   args.receiver.router.post("/slack-events", (req, res) => {
-    console.log(`req.query: ${JSON.stringify(req.query)}`);
+    console.log(`req.query: ${JSON.stringify(req)}`);
     const rtnText = "received slack event: " + JSON.stringify(req.query);
     args.app.dm({
       user: "D06RQD9064A",
