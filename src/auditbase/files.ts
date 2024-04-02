@@ -66,6 +66,7 @@ async function checkUploadFiles(
 ): Promise<FileInfo | null> {
   const now = Date.now() / 1000;
   const maxAge = 60 * 7; // 7 minutes
+  console.log("fileUploads len: ", fileUploads.length);
   const filesRecent = files.filter((file) => now - file.timestamp < maxAge);
   const filesNotFound = filesRecent.filter(
     (file) => !fileUploads.some((upload) => upload.id === file.id)

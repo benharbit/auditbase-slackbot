@@ -73,6 +73,7 @@ export const addHttpHandlers = (args: {
     if (eventType === "file_shared") {
       const fileId = req.body.event?.file_id;
       if (fileId) {
+        console.log("pushed to file uploads");
         fileUploads.push({
           id: fileId,
           timestamp: req.body.event?.file?.event_ts,
