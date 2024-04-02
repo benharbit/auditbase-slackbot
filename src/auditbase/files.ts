@@ -70,10 +70,12 @@ async function checkUploadFiles(
   console.log("fileUploads len: ", fileUploads.length);
   const now = Date.now() / 1000;
   const maxAge = 60 * 7; // 7 minutes
-  const filesRecent = files.filter((file) => now - file.timestamp < maxAge);
+  const filesRecent = fileUploads.filter(
+    (file) => now - file.timestamp < maxAge
+  );
   console.log("fileRecent len: ", filesRecent.length);
-  const filesNotFound = filesRecent.filter(
-    (file) => !fileUploads.some((upload) => upload.id === file.id)
+  const filesNotFound = fileUploads.filter(
+    (fileUpload) => !files.some((file) => fileUpload.id === file.id)
   );
   console.log("filesNotFound len: ", filesNotFound.length);
   for (const file of filesNotFound) {
