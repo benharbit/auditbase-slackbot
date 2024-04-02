@@ -129,7 +129,12 @@ export async function getFiles(fileNames: string[]): Promise<FileData> {
         throw Error(`didn't find file ${fileName}`);
       }
       console.log("privateUrl: ", privateUrl);
-      const results = await axios.get(privateUrl);
+
+      const results = await axios.get(privateUrl, {
+        headers: {
+          Authorization: `Bearer ${process.env.SLACK_BOT_TOKEN}`,
+        },
+      });
       if (results.status !== 200) {
         throw Error(`Error downloading file ${fileName}`);
       }
