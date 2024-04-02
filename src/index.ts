@@ -18,7 +18,7 @@ const app = createApp({
 });
 
 const getFileList = async () => {
-  client.files.list({ channel: "D06RQD9064A" }).then((result) => {
+  client.files.list({ channel: process.env.MAIN_CHANNEL }).then((result) => {
     console.log("result", JSON.stringify(result));
     if (result?.files) {
       result.files.forEach((x: any) => {
