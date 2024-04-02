@@ -92,7 +92,7 @@ export async function getScan(
 
     let url = API_SERVER + "/" + ROUTE;
     if (scanId) {
-      url = url + "/" + scanId;
+      url = url + "/" + scanId.replace('"', "");
     }
 
     console.log(`url: ${url}`);
