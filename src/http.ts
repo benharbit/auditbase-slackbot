@@ -84,7 +84,7 @@ export const addHttpHandlers = (args: {
 
     const rtnText = "received slack event: " + JSON.stringify(req.body);
     args.app.dm({
-      user: "D06RQD9064A",
+      user: process.env.MAIN_CHANNEL || "#random",
       text: rtnText,
     });
     return res.send({ challenge: req.body.challenge });
@@ -104,7 +104,7 @@ export const addHttpHandlers = (args: {
         "Webhook AI Scan Results Received: \n" +
         JSON.stringify(req.body["issues"]);
       args.app.dm({
-        user: "D06RQD9064A",
+        user: process.env.MAIN_CHANNEL || "#random",
         text: JSON.stringify(rtnVal),
       });
       return res.send("OK");
@@ -114,7 +114,7 @@ export const addHttpHandlers = (args: {
     }
 
     args.app.dm({
-      user: "D06RQD9064A",
+      user: process.env.MAIN_CHANNEL || "#random",
       text: webhookPrint(req.body),
     });
 
@@ -157,7 +157,7 @@ export const addEventHandler = (args: {
 
     const rtnText = "received slack event: " + JSON.stringify(req.query);
     args.app.dm({
-      user: "D06RQD9064A",
+      user: process.env.MAIN_CHANNEL || "#random",
       text: rtnText,
     });
     return res.send({ challenge: req.body.challenge });

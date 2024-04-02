@@ -36,7 +36,7 @@ addHttpHandlers({
   app,
   receiver,
   allowedTokens: [process.env.WEBHOOK_TOKEN!],
-  dmChannel: "D06RQD9064A" || "#random",
+  dmChannel: process.env.MAIN_CHANNEL || "#random",
 });
 
 (async () => {

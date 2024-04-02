@@ -15,15 +15,29 @@ type FileInfo = {
 
 async function getFileList(): Promise<FileInfo[]> {
   try {
-    const result = await client.files.list({
-      channel: process.env.MAIN_CHANNEL,
-    });
-    if (result?.files) {
-      result.files.forEach((x: any) => {
-        console.log(`filezzz: ${JSON.stringify(x)}`);
+    let result = {
+      files: [],
+      paging: {
+        page: 0,
+        pages: 1,
+        total: 0,
+        per_page: 0,
+      },
+    };
+    const files = [];
+    let page = 0;
+    while (page < 5 && result.paging?.page < result.paging?.pages) {
+      ++page;
+      const result = await client.files.list({
+        channel: process.env.MAIN_CHANNEL,
+        page,
       });
+      if (result?.files) {
+        files.push(...result.files);
+      }
     }
-    const rtnFiles = result?.files?.map((file: any) => {
+
+    const rtnFiles = files.map((file: any) => {
       return {
         id: file.id,
         content: "",
@@ -118,7 +132,7 @@ export async function getFiles(fileNames: string[]): Promise<FileData> {
       if (matched_files.length > 0 && matched_files.at(-1) !== undefined) {
         privateUrl = matched_files.at(-1)!.url_private_download!;
       } else {
-        console.log("here didn't find file not checking uploads");
+        console.log("Did not find file in files.list; Now checking uploads");
         const file = await checkUploadFiles(fileName, allFiles);
         if (file) {
           privateUrl = file.url_private_download;
