@@ -128,6 +128,7 @@ export async function getFiles(fileNames: string[]): Promise<FileData> {
       if (!privateUrl) {
         throw Error(`didn't find file ${fileName}`);
       }
+      console.log("privateUrl: ", privateUrl);
       const results = await axios.get(privateUrl);
       if (results.status !== 200) {
         throw Error(`Error downloading file ${fileName}`);
