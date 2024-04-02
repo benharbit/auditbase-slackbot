@@ -77,7 +77,9 @@ async function checkUploadFiles(
   );
   console.log("filesNotFound len: ", filesNotFound.length);
   for (const file of filesNotFound) {
+    console.log("fileid: ", file.id);
     const fileInfo = await getFileById(file.id);
+    console.log("fileInfo: ", fileInfo);
 
     if (fileInfo?.name === searchFile) {
       return fileInfo;
