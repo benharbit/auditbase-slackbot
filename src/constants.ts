@@ -4,8 +4,8 @@ type UserRecord = {
 };
 
 type FileUpload = {
-  fileName: string;
-  fileId: string;
+  name: string;
+  id: string;
   timestamp: number;
 };
 export const userRecords: UserRecord[] = [];

@@ -30,7 +30,7 @@ export async function placeAiScan(file_1: string, apiKey: string) {
     console.log(res_data);
     return res_data;
   } catch (error: Error | any) {
-    console.log("error123");
+    console.log("error aiScan: ", error);
     throw error;
     // console.log(error);
 

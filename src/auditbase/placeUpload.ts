@@ -33,10 +33,7 @@ export async function placeUploadScan(files: string[], apiKey: string) {
     console.log(res_data);
     return res_data;
   } catch (error: Error | any) {
-    console.log("error123");
+    console.log(`error123 ${error}`);
     throw error;
-    // console.log(error);
-
-    // return "unknown error";
   }
 }

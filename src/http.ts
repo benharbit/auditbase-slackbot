@@ -74,9 +74,9 @@ export const addHttpHandlers = (args: {
       const fileId = req.body.event?.file_id;
       if (fileId) {
         fileUploads.push({
-          fileId,
-          timestamp: Date.now(),
-          fileName: "",
+          id: fileId,
+          timestamp: req.body.event?.file?.event_ts,
+          name: "",
         });
       }
     }
