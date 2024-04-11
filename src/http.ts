@@ -94,6 +94,17 @@ export const addHttpHandlers = (args: {
   args.receiver.router.post("/webhook", (req, res) => {
     const token = req.query.token as string;
     console.log(`webhook received`);
+    for (let x in req) {
+      console.log(`req key: ${x}`);
+    }
+
+    if (req?.body) {
+      for (const x in req.body) {
+        console.log(`req body key: ${x}`);
+        //console.log("type of key: ", typeof req.body[x]);
+      }
+    }
+
     if (req.body["result"]) {
       for (const x in req.body["result"]) {
         console.log(`key: ${x}`);
@@ -101,6 +112,7 @@ export const addHttpHandlers = (args: {
       }
     } else if (req?.body?.issues) {
       //branch from aiscan
+      console.log("issues found");
       const rtnVal =
         "Webhook AI Scan Results Received: \n" +
         JSON.stringify(req.body["issues"]);
