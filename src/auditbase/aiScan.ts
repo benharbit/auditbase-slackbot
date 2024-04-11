@@ -8,7 +8,7 @@ export async function placeAiScan(file_1: string, apiKey: string) {
   const url = AUDITBASE_API_SERVER + ROUTE;
 
   try {
-    if (!file_1) throw Error("No file name provided");
+    if (!file_1) throw Error("No file name provided ");
     const files_obj = await getFiles([file_1]);
 
     const post_data = {
