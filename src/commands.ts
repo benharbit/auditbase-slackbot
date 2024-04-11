@@ -326,5 +326,5 @@ export const addSlashCommands = (app: ChatBot) => {
   app.command("/scans-explorer", getExplorerScan(app));
   app.command("/scans", getScans(app));
   app.command("/scans-upload", getUploadScan(app));
-  app.command("/scans-ai", getUploadScan(app));
+  app.command("/scans-ai", getAiScan(app));
 };
