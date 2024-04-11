@@ -12,10 +12,8 @@ export async function placeAiScan(file_1: string, apiKey: string) {
     const files_obj = await getFiles([file_1]);
 
     const post_data = {
-      params: {
-        source_code: Object.values(files_obj).at(0),
-        callback_url: process.env.AUDITBASE_WEBHOOK_URL,
-      },
+      source_code: Object.values(files_obj).at(0),
+      callback_url: process.env.AUDITBASE_WEBHOOK_URL,
     };
 
     let res = await axios.post(url.toString(), post_data, {
