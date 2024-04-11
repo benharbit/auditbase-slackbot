@@ -13,8 +13,8 @@ export async function placeAiScan(file_1: string, apiKey: string) {
 
     const post_data = {
       params: {
-        source: Object.values(files_obj).at(0),
-        webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
+        source_code: Object.values(files_obj).at(0),
+        callback_url: process.env.AUDITBASE_WEBHOOK_URL,
       },
     };
 
