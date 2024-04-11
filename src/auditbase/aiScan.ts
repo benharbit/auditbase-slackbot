@@ -4,7 +4,7 @@ import { getFiles } from "./files";
 const AUDITBASE_API_SERVER = process.env.AUDITBASE_API_SERVER;
 
 export async function placeAiScan(file_1: string, apiKey: string) {
-  const ROUTE = "/scans/ai-scan";
+  const ROUTE = "v1/ai-scan";
   const url = AUDITBASE_API_SERVER + ROUTE;
 
   try {
