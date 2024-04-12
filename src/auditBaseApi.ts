@@ -8,14 +8,15 @@ const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 export async function placeExplorerScan(
   chain_id: string,
   contract_address: string,
-  apiKey: string
+  apiKey: string,
+  webhook_url: string
 ) {
   const ROUTE = "/scans/explorer";
   const url = API_SERVER + ROUTE;
   const data = {
     chain_id,
     contract_address,
-    webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
+    webhook_url,
   };
   try {
     console.log("url: ", url);

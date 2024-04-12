@@ -70,7 +70,8 @@ const parseCommand = (text: string) => {
 };
 
 const getWebhookUrl = (slackChannel: string, type: string) => {
-  const WEBHOOK_URL = `https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${slackChannel}&type=${type}`;
+  const WEBHOOK_URL = `${process.env.AUDITBASE_WEBHOOK_URL}?slackChannel=${slackChannel}&type=${type}`;
+  return WEBHOOK_URL;
 };
 
 const getExplorerScan =
@@ -87,7 +88,7 @@ const getExplorerScan =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const WEBHOOK_URL = getWebhookUrl(command.user_id, "explorer");
+    const webhookUrl = getWebhookUrl(command.user_id, "explorer");
 
     try {
       await ack();
@@ -104,7 +105,12 @@ const getExplorerScan =
 
         console.log("chainId: ", strs[0]);
         console.log("address: ", strs[1]);
-        const result = await placeExplorerScan(strs[0], strs[1], apiKey);
+        const result = await placeExplorerScan(
+          strs[0],
+          strs[1],
+          apiKey,
+          webhookUrl
+        );
         await app.dm({
           user: command.user_id,
           blocks: [
@@ -152,14 +158,14 @@ const getUploadScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const WEBHOOK_URL = getWebhookUrl(command.user_id, "upload");
+    const webHookUrl = getWebhookUrl(command.user_id, "upload");
     //`https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}&type=upload`;
 
     try {
       await ack();
       const args = parseCommand(command.text);
       const key = args.apiKey;
-      const result = await placeUploadScan(args.args, key);
+      const result = await placeUploadScan(args.args, key, webHookUrl);
       await app.dm({
         user: command.user_id,
         text: `Return value: ${JSON.stringify(result)}`,
@@ -202,7 +208,7 @@ const getAiScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const WEBHOOK_URL = getWebhookUrl(command.user_id, "ai-scan");
+    const webhookUrl = getWebhookUrl(command.user_id, "ai-scan");
     //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
     // "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
 
@@ -211,7 +217,7 @@ const getAiScan =
       const args = parseCommand(command.text);
       const key = args.apiKey || process.env.AUDITBASE_API_KEY || "";
 
-      const result = await placeAiScan(args.args[0], key);
+      const result = await placeAiScan(args.args[0], key, webhookUrl);
       await app.dm({
         user: command.user_id,
         text: `Return value: ${JSON.stringify(result)}`,
@@ -254,6 +260,7 @@ const getScans =
     console.log("ack: ", ack);
     console.log("says: ", say);
     const WEBHOOK_URL = getWebhookUrl(command.user_id, "scan");
+
     //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
 
     try {

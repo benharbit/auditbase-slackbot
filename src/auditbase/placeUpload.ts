@@ -6,7 +6,11 @@ const AUDITBASE_API_SERVER = process.env.AUDITBASE_API_SERVER;
 
 const client = new WebClient(process.env.SLACK_BOT_TOKEN);
 
-export async function placeUploadScan(files: string[], apiKey: string) {
+export async function placeUploadScan(
+  files: string[],
+  apiKey: string,
+  webhookUrl: string
+) {
   const ROUTE = "/scans/upload";
   const url = AUDITBASE_API_SERVER + ROUTE;
 
@@ -17,7 +21,7 @@ export async function placeUploadScan(files: string[], apiKey: string) {
     const post_data = {
       params: {
         files: files_obj,
-        webhook_url: process.env.AUDITBASE_WEBHOOK_URL,
+        webhook_url: webhookUrl,
       },
     };
 
