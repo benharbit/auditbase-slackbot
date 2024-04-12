@@ -88,7 +88,7 @@ const getExplorerScan =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const webhookUrl = getWebhookUrl(command.channel_id, "explorer");
+    const webhookUrl = getWebhookUrl(command.user_id, "explorer");
 
     try {
       await ack();
@@ -112,7 +112,7 @@ const getExplorerScan =
           webhookUrl
         );
         await app.dm({
-          user: command.channel_id,
+          user: command.user_id,
           blocks: [
             {
               type: "section",
