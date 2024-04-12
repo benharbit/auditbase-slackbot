@@ -168,7 +168,7 @@ const getUploadScan =
       const result = await placeUploadScan(args.args, key, webHookUrl);
       await app.dm({
         user: command.user_id,
-        text: `Return value: ${JSON.stringify(result)}`,
+        text: `Place upload return value: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
@@ -220,7 +220,7 @@ const getAiScan =
       const result = await placeAiScan(args.args[0], key, webhookUrl);
       await app.dm({
         user: command.user_id,
-        text: `Return value: ${JSON.stringify(result)}`,
+        text: `AI scan results: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
