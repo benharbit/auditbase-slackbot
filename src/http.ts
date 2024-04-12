@@ -97,9 +97,8 @@ export const addHttpHandlers = (args: {
       const params = req.params;
       console.log("params: ", params);
       console.log(`webhook received`);
-      for (let x in req) {
-        console.log(`req key: ${x}`);
-      }
+      console.log(`url ${req.url}`);
+      console.log(`query ${req.query}`);
 
       if (req?.body) {
         for (const x in req.body) {
