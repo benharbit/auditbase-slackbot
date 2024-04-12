@@ -102,7 +102,9 @@ export const addHttpHandlers = (args: {
       console.log(`query ${JSON.stringify(req.query)}`);
       const channel = String(req?.query?.slackChannel || "#random");
       const scanType = String(req?.query?.scanType || "unknown");
-      const title = `Webhook received: ${scanType} scan type`;
+      const title = `${
+        scanType.charAt(0).toUpperCase() + scanType.slice(1)
+      } Webhook Received`;
       console.log("channel: ", channel);
       console.log("scanType: ", scanType);
 
