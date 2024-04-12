@@ -74,6 +74,10 @@ const getWebhookUrl = (slackChannel: string, type: string) => {
   return WEBHOOK_URL;
 };
 
+const getDMDestination = (command: SlashCommand) => {
+  return command.channel_id;
+};
+
 const getExplorerScan =
   (app: ChatBot) =>
   async ({
@@ -88,15 +92,15 @@ const getExplorerScan =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const webhookUrl = getWebhookUrl(command.user_id, "explorer");
-
+    const webhookUrl = getWebhookUrl(command.channel_id, "explorer");
+    const dmDestination = getDMDestination(command);
     try {
       await ack();
       if (command.text) {
         const strs = command.text.split(" ");
         if (strs.length < 2) {
           await app.dm({
-            user: command.user_id,
+            user: command.channel_id,
             text: "chainId and address are required",
           });
           return;
@@ -112,7 +116,7 @@ const getExplorerScan =
           webhookUrl
         );
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           blocks: [
             {
               type: "section",
@@ -134,7 +138,7 @@ const getExplorerScan =
       if (error instanceof MessageError) {
         console.log("error: ", error);
         await app.dm({
-          user: command.channel_id,
+          user: dmDestination,
           text: (error as MessageError).message,
         });
       } else {
@@ -158,35 +162,35 @@ const getUploadScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const webHookUrl = getWebhookUrl(command.user_id, "upload");
+    const webHookUrl = getWebhookUrl(command.channel_id, "upload");
     //`https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}&type=upload`;
-
+    const dmDestination = getDMDestination(command);
     try {
       await ack();
       const args = parseCommand(command.text);
       const key = args.apiKey;
       const result = await placeUploadScan(args.args, key, webHookUrl);
       await app.dm({
-        user: command.user_id,
+        user: dmDestination,
         text: `Place upload return value: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
         console.log("error: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: (error as MessageError).message,
         });
       } else if (error instanceof Error) {
         console.log("error3: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: `Error: ${error.message}`,
         });
       } else {
         console.log("error2: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: `error with ${JSON.stringify(error)}`,
         });
       }
@@ -208,9 +212,8 @@ const getAiScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const webhookUrl = getWebhookUrl(command.user_id, "ai");
-    //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
-    // "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+    const webhookUrl = getWebhookUrl(command.channel_id, "ai");
+    const dmDestination = getDMDestination(command);
 
     try {
       await ack();
@@ -219,26 +222,26 @@ const getAiScan =
 
       const result = await placeAiScan(args.args[0], key, webhookUrl);
       await app.dm({
-        user: command.user_id,
+        user: dmDestination,
         text: `AI scan results: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
         console.log("error: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: (error as MessageError).message,
         });
       } else if (error instanceof Error) {
         console.log("error3: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: `Error: ${error.message}`,
         });
       } else {
         console.log("error2: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: `error with ${JSON.stringify(error)}`,
         });
       }
@@ -259,7 +262,7 @@ const getScans =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-
+    const dmDestination = getDMDestination(command);
     //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
 
     try {
@@ -310,11 +313,11 @@ const getScans =
             },
           ];
           await app.dm({
-            user: command.user_id,
+            user: dmDestination,
             blocks,
           });
         } else {
-          await app.dm({ user: command.user_id, text: JSON.stringify(result) });
+          await app.dm({ user: dmDestination, text: JSON.stringify(result) });
         }
         console.log("result: ", result);
       }
@@ -322,7 +325,7 @@ const getScans =
       if (error instanceof MessageError) {
         console.log("error: ", error);
         await app.dm({
-          user: command.user_id,
+          user: dmDestination,
           text: (error as MessageError).message,
         });
       } else {
