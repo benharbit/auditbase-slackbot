@@ -223,7 +223,7 @@ const getAiScan =
       const result = await placeAiScan(args.args[0], key, webhookUrl);
       await app.dm({
         user: dmDestination,
-        text: `AI scan results: ${JSON.stringify(result)}`,
+        text: `AI place scan response: ${JSON.stringify(result)}`,
       });
     } catch (error) {
       if (error instanceof MessageError) {
