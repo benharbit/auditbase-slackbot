@@ -100,55 +100,23 @@ export const addHttpHandlers = (args: {
       console.log(`url ${req.url}`);
       console.log(`url ${req.originalUrl}`);
       console.log(`query ${JSON.stringify(req.query)}`);
+      const channel = String(req?.query?.slackChannel || "#random");
+      const scanType = String(req?.query?.scanType || "unknown");
+      const title = `Webhook received: ${scanType} scan type`;
+      console.log("channel: ", channel);
+      console.log("scanType: ", scanType);
 
-      if (req.body["result"]) {
-        for (const x in req.body["result"]) {
-          console.log(`key: ${x}`);
-          //console.log("type of key: ", typeof req.body["result"][x]);
-        }
-      } else if (req?.body?.issues) {
-        //branch from aiscan
-        console.log("issues found");
-        const rtnVal =
-          "Webhook AI Scan Results Received: \n" +
-          JSON.stringify(req.body["issues"]);
-        args.app.dm({
-          user: process.env.MAIN_CHANNEL || "#random",
-          text: JSON.stringify(rtnVal),
-        });
-        return res.send("OK");
-      } else {
-        console.log("no issues found");
-        console.log("req.body", req.body);
-      }
+      const mainMessage =
+        scanType === "ai-scan"
+          ? JSON.stringify(req.body)
+          : webhookPrint(req.body);
 
-      console.log(
-        `webhook sending db: ${JSON.stringify(process.env.MAIN_CHANNEL)}`
-      );
       args.app.dm({
-        user: process.env.MAIN_CHANNEL || "#random",
-        text: webhookPrint(req.body),
+        user: channel,
+        text: title + "\r\n" + mainMessage,
       });
-
-      const found_records = userRecords.filter(
-        (user) => user === req.body["scan_id"]
-      );
 
       return res.send("OK");
-
-      const hasAccess = token && args.allowedTokens.includes(token);
-      if (!hasAccess) {
-        console.log(`Attempted accessing POST webhook without valid token`);
-        return res.send("OK");
-      }
-      const dataLength = JSON.stringify(req.body).length;
-      console.log(`POST /webhook received:`);
-      console.log(JSON.stringify(req.body, undefined, 2));
-      args.app.dm({
-        user: args.dmChannel,
-        text: `/webhook got a POST request with data of length ${dataLength}`,
-      });
-      res.send(`Super`);
     } catch (error: Error | any) {
       console.log(`error in webhook: ${error}`);
       return res.send("OK");
