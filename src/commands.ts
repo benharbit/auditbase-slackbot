@@ -208,7 +208,7 @@ const getAiScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const webhookUrl = getWebhookUrl(command.user_id, "ai-scan");
+    const webhookUrl = getWebhookUrl(command.user_id, "ai");
     //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
     // "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
 
