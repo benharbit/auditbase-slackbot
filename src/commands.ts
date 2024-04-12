@@ -69,6 +69,10 @@ const parseCommand = (text: string) => {
   };
 };
 
+const getWebhookUrl = (slackChannel: string, type: string) => {
+  const WEBHOOK_URL = `https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${slackChannel}&type=${type}`;
+};
+
 const getExplorerScan =
   (app: ChatBot) =>
   async ({
@@ -83,8 +87,7 @@ const getExplorerScan =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const WEBHOOK_URL =
-      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+    const WEBHOOK_URL = getWebhookUrl(command.user_id, "explorer");
 
     try {
       await ack();
@@ -149,8 +152,8 @@ const getUploadScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const WEBHOOK_URL =
-      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+    const WEBHOOK_URL = getWebhookUrl(command.user_id, "upload");
+    //`https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}&type=upload`;
 
     try {
       await ack();
@@ -199,8 +202,9 @@ const getAiScan =
     console.log("ack: ", ack);
     console.log("says: ", say);
 
-    const WEBHOOK_URL =
-      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+    const WEBHOOK_URL = getWebhookUrl(command.user_id, "ai-scan");
+    //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
+    // "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
 
     try {
       await ack();
@@ -249,8 +253,8 @@ const getScans =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const WEBHOOK_URL =
-      "https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook";
+    const WEBHOOK_URL = getWebhookUrl(command.user_id, "scan");
+    //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
 
     try {
       const DO_TRUNCATE = true;
