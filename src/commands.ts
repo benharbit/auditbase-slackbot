@@ -70,7 +70,7 @@ const parseCommand = (text: string) => {
 };
 
 const getWebhookUrl = (slackChannel: string, type: string) => {
-  const WEBHOOK_URL = `${process.env.AUDITBASE_WEBHOOK_URL}?slackChannel=${slackChannel}&type=${type}`;
+  const WEBHOOK_URL = `${process.env.AUDITBASE_WEBHOOK_URL}?slackChannel=${slackChannel}&scanType=${type}`;
   return WEBHOOK_URL;
 };
 
@@ -259,7 +259,6 @@ const getScans =
     console.log("command: ", command);
     console.log("ack: ", ack);
     console.log("says: ", say);
-    const WEBHOOK_URL = getWebhookUrl(command.user_id, "scanType");
 
     //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
 
