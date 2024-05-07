@@ -1,7 +1,7 @@
 # Auditbase Slack-Bot
 
 Auditbase slackbot is way to request Auditbase scans from slack
-using Slack and Auditbase API's.
+using Slack and Auditbase APIs.
 
 # Slack-bot starter
 
@@ -19,7 +19,7 @@ A starter for creating your own Slack bot using [Bolt](https://github.com/slacka
 
 Follow these steps to set up this bot on your Slack
 
-1. obtain an Auditbase API key.
+1. Obtain an Auditbase API key.
 2. Deploy this repository to a server.
    Note down the public URL, e.g. `example.herokuapp.com`
 
