@@ -1,10 +1,11 @@
+# Auditbase Slack-Bot
+
+Auditbase slackbot is way to request Auditbase scans from slack
+using Slack and Auditbase API's.
+
 # Slack-bot starter
 
 A starter for creating your own Slack bot using [Bolt](https://github.com/slackapi/bolt-js).
-
-> With an example face quiz slash command.
-
-![/facequiz](./slash-quiz.png)
 
 **Related links**
 
@@ -18,33 +19,26 @@ A starter for creating your own Slack bot using [Bolt](https://github.com/slacka
 
 Follow these steps to set up this bot on your Slack
 
-1. Deploy this repository to a server.
+1. obtain an Auditbase API key.
+2. Deploy this repository to a server.
    Note down the public URL, e.g. `example.herokuapp.com`
 
-2. Go to [api.slack.com/apps](https://api.slack.com/apps?new_app=1), and create a new App.
+3. Go to [api.slack.com/apps](https://api.slack.com/apps?new_app=1), and create a new App.
 
-3. This app comes with a command `/facequiz`, that will quiz you on DM about names and faces
-   of the users in your Slack. To enabled this, we need to.
+4. Define environmental variables listed in .env.example
+
+5. This app comes with a commands `/scans-explorer`, `/scans`, `/scans-upload`
 
    - **Go to Slash Commands** and create a new command.
-   - The command must match our code, so enter `/facequiz` here
    - For the URL, enter your domain, followed by `/slack/events`.
      _E.g.`https://example.herokuapp.com/slack/events`_
    - Add some description and save.
 
-   We'll need permissions to find users and their avatars, as well as
-   send chat messages:
+   We'll need permissions to upload files and read and write to slack:
 
    - Go to _OAuth and Permissions_ in the left menu
    - Required scopes `commands`, `users:read` and `chat:write`.
    - Consider scopes `app_mentions:read`, `im:read`, `im:write`, `mpim:read`, `mpim:write`, `chat:write.public`, `links:write`, `incoming-webhook` (simplifies life and allows you to do basic interaction/conversation)
-
-   For our bot to be able to respond to interactive messages, we must enable
-   interactivity:
-
-   - Go to _Interactivity and Shortcuts_, and enable it.
-   - For the request url, we use the same as previously, e.g.
-     `https://example.herokuapp.com/slack/events`
 
    We need Slack auth keys to be added. We do this by setting environment
    variables on the server we set up in step 1:
@@ -58,11 +52,6 @@ Follow these steps to set up this bot on your Slack
    - `WEBHOOK_TOKEN`: Any string that will work as a token for calling our endpoint.
    - `SLACK_WEBHOOK_CHANNEL`: The channel (or user) to receive data from webhooks,
      e.g. `#random` or `@myhandle`.
-
-## Develop
-
-Follow these instruction when you wish to develop the bot
-further.
 
 ### Run bot locally
 
