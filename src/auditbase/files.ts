@@ -78,16 +78,11 @@ async function checkUploadFiles(
   searchFile: string,
   files: FileInfo[]
 ): Promise<FileInfo | null> {
-  console.log("enter checkUploadFiles");
-  console.log("searchFile: ", searchFile);
-  console.log("num files: ", files.length);
-  console.log("fileUploads len: ", fileUploads.length);
   const now = Date.now() / 1000;
   const maxAge = 60 * 7; // 7 minutes
   const filesRecent = fileUploads.filter(
     (file) => now - file.timestamp < maxAge
   );
-  console.log("fileRecent len: ", filesRecent.length);
   const filesNotFound = fileUploads.filter(
     (fileUpload) => !files.some((file) => fileUpload.id === file.id)
   );

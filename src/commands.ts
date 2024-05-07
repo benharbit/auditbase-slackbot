@@ -2,50 +2,9 @@ import { AckFn, RespondArguments, SayFn, SlashCommand } from "@slack/bolt";
 
 import { MessageError } from "./errors";
 import { ChatBot } from "./types";
-import { getFaceQuiz } from "./quiz";
-import { fetchUsers } from "./data";
 import { placeExplorerScan, getScan, truncate } from "./auditBaseApi";
 import { placeUploadScan } from "./auditbase/placeUpload";
 import { placeAiScan } from "./auditbase/aiScan";
-
-const getFaceQuizCommand =
-  (app: ChatBot) =>
-  async ({
-    command,
-    ack,
-    say,
-  }: {
-    command: SlashCommand;
-    ack: AckFn<string | RespondArguments>;
-    say: SayFn;
-  }) => {
-    console.log("command: ", command);
-    console.log("ack: ", ack);
-    console.log("says: ", say);
-
-    try {
-      await ack();
-      const slackUsers = await fetchUsers({ app });
-      console.log("slackUsers: ", slackUsers);
-      console.log("command.user_id: ", command.user_id);
-
-      const quiz = await getFaceQuiz({
-        exclude: [command.user_id],
-        slackUsers,
-      });
-      console.log("quiz: ", quiz.blocks);
-      await app.dm({ user: command.user_id, blocks: quiz.blocks });
-    } catch (error) {
-      if (error instanceof MessageError) {
-        await app.dm({
-          user: command.user_id,
-          text: (error as MessageError).message,
-        });
-      } else {
-        throw error;
-      }
-    }
-  };
 
 const parseCommand = (text: string) => {
   const args = text.split(" ");
@@ -106,9 +65,6 @@ const getExplorerScan =
           return;
         }
         const apiKey = strs.length > 2 ? strs[2] : "";
-
-        console.log("chainId: ", strs[0]);
-        console.log("address: ", strs[1]);
         const result = await placeExplorerScan(
           strs[0],
           strs[1],
@@ -132,7 +88,6 @@ const getExplorerScan =
             result
           )} </span>`,
         });
-        console.log("result: ", result);
       }
     } catch (error) {
       if (error instanceof MessageError) {
@@ -158,12 +113,7 @@ const getUploadScan =
     ack: AckFn<string | RespondArguments>;
     say: SayFn;
   }) => {
-    console.log("command: ", command);
-    console.log("ack: ", ack);
-    console.log("says: ", say);
-
     const webHookUrl = getWebhookUrl(command.channel_id, "upload");
-    //`https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}&type=upload`;
     const dmDestination = getDMDestination(command);
     try {
       await ack();
@@ -208,10 +158,6 @@ const getAiScan =
     ack: AckFn<string | RespondArguments>;
     say: SayFn;
   }) => {
-    console.log("command: ", command);
-    console.log("ack: ", ack);
-    console.log("says: ", say);
-
     const webhookUrl = getWebhookUrl(command.channel_id, "ai");
     const dmDestination = getDMDestination(command);
 
@@ -227,19 +173,19 @@ const getAiScan =
       });
     } catch (error) {
       if (error instanceof MessageError) {
-        console.log("error: ", error);
+        console.log("MessageError: ", error);
         await app.dm({
           user: dmDestination,
           text: (error as MessageError).message,
         });
       } else if (error instanceof Error) {
-        console.log("error3: ", error);
+        console.log("Error: ", error);
         await app.dm({
           user: dmDestination,
           text: `Error: ${error.message}`,
         });
       } else {
-        console.log("error2: ", error);
+        console.log("Other error: ", error);
         await app.dm({
           user: dmDestination,
           text: `error with ${JSON.stringify(error)}`,
@@ -259,12 +205,7 @@ const getScans =
     ack: AckFn<string | RespondArguments>;
     say: SayFn;
   }) => {
-    console.log("command: ", command);
-    console.log("ack: ", ack);
-    console.log("says: ", say);
     const dmDestination = getDMDestination(command);
-    //`https://https://slack-bot-3-11d6a34b27bc.herokuapp.com/webhook?slackChannel=${command.user_id}`;
-
     try {
       const DO_TRUNCATE = true;
 
@@ -285,7 +226,6 @@ const getScans =
           }
           ++i;
         }
-        console.log("got here at scan");
 
         const result = await getScan(scanId, apiKey);
         if (result.statusCode === 200) {
@@ -319,7 +259,6 @@ const getScans =
         } else {
           await app.dm({ user: dmDestination, text: JSON.stringify(result) });
         }
-        console.log("result: ", result);
       }
     } catch (error) {
       if (error instanceof MessageError) {
@@ -335,7 +274,6 @@ const getScans =
   };
 
 export const addSlashCommands = (app: ChatBot) => {
-  app.command("/facequiz", getFaceQuizCommand(app));
   app.command("/scans-explorer", getExplorerScan(app));
   app.command("/scans", getScans(app));
   app.command("/scans-upload", getUploadScan(app));

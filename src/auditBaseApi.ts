@@ -19,10 +19,6 @@ export async function placeExplorerScan(
     webhook_url,
   };
   try {
-    console.log("url: ", url);
-    console.log("data: ", data);
-    console.log("zzz: ", apiKey ? apiKey : process.env.AUDITBASE_API_KEY);
-
     let res = await axios.post(url, data, {
       headers: {
         "Content-Type": "application/json",
@@ -32,7 +28,6 @@ export async function placeExplorerScan(
       },
     });
     const res_data = res.data;
-    console.log("responseaa: ", res_data);
     return res_data;
   } catch (error: Error | any) {
     if (error.message) {
@@ -71,40 +66,19 @@ export async function getScan(
   apiKey: string
 ): Promise<ScanResult> {
   try {
-    console.log(`enter scan: scanId: ${scanId} apiKey${apiKey}`);
     const ROUTE = "scans";
-    /*
-    const files = await getFileList();
-    for (const file_name in files) {
-      console.log(`${JSON.stringify(file_name)}`);
-    }
-    if (files && files.length > 0) {
-      console.log(`file: ${JSON.stringify(files[0])}`);
-
-      if (files[0].url_private_download) {
-        const res = await axios.get(files[0].url_private_download);
-        if (res.status === 200) {
-          console.log(`file_contents: ${JSON.stringify(res.data)}`);
-        } else {
-        }
-      }
-    }
-    */
-
     let url = API_SERVER + "/" + ROUTE;
     if (scanId) {
       url = url + "/" + scanId.replace(/\"/g, "");
       console.log(`scanId: ${url} `);
     }
 
-    console.log(`url: ${url}`);
     const headers = {
       "Content-Type": "application/json",
       Authorization: `Bearer ${
         apiKey ? apiKey : process.env.AUDITBASE_API_KEY
       }`,
     };
-    console.log(`headers: ${JSON.stringify(headers)}`);
     let res = await axios.get(url, {
       headers,
     });
@@ -122,9 +96,6 @@ export async function getScan(
         statusCode: res.status,
       };
     }
-    const res_data = res.data;
-    console.log(res_data);
-    return res_data;
   } catch (error: Error | any) {
     if (error.message) {
       console.error(error.message);

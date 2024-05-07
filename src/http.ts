@@ -6,8 +6,6 @@ import { ExpressReceiver } from "@slack/bolt";
 import { fileUploads } from "./constants";
 
 const truncateIssues = (data: Array<any>) => {
-  console.log("is array", data instanceof Array);
-  console.log("type of ", typeof data);
   if (data.length < 10) {
     return JSON.stringify(data);
   }
@@ -95,11 +93,6 @@ export const addHttpHandlers = (args: {
     try {
       const token = req.query.token as string;
       const params = req.params;
-      console.log("params: ", params);
-      console.log(`webhook received`);
-      console.log(`url ${req.url}`);
-      console.log(`url ${req.originalUrl}`);
-      console.log(`query ${JSON.stringify(req.query)}`);
       const channel = String(req?.query?.slackChannel || "#random");
       const scanType = String(req?.query?.scanType || "unknown");
       const scanTypeFmted =
@@ -107,8 +100,6 @@ export const addHttpHandlers = (args: {
           ? "AI"
           : scanType.charAt(0).toUpperCase() + scanType.slice(1);
       const title = `${scanTypeFmted} scan Webhook Received`;
-      console.log("channel: ", channel);
-      console.log("scanType: ", scanType);
 
       const mainMessage =
         scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
