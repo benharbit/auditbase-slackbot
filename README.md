@@ -1,7 +1,6 @@
 # Auditbase Slack-Bot
 
-Auditbase slackbot is way to request Auditbase scans from slack
-using Slack and Auditbase APIs.
+Auditbase slackbot allows slack users to request Auditbase scans.
 
 # Slack-bot starter
 
