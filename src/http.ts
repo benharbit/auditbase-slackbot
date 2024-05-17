@@ -41,20 +41,20 @@ const convertToJson = (issues: any) => {
   issues.forEach((issue: any, index: number) => {
     rtnStr += "";
     if ("title" in issue) {
-      const title = `Title: ${issue.title}`.toUpperCase();
-      rtnStr += `*Title: ${title}*\n\n`;
+      const title = `\nTitle: ${issue.title}`;
+      rtnStr += `*${title}*\n\n`;
     }
     if ("description" in issue) {
-      rtnStr += `\t* *Description*: ${issue.description}\n`;
+      rtnStr += `* *Description*: ${issue.description}\n`;
     }
     if ("severity" in issue) {
-      rtnStr += `\t* *Severity*: ${issue.severity}\n`;
+      rtnStr += `* *Severity*: ${issue.severity}\n`;
     }
     if ("confidence" in issue) {
-      rtnStr += `\t* *Confidence*: ${issue.confidence}\n`;
+      rtnStr += `* *Confidence*: ${issue.confidence}\n`;
     }
     if ("snippet" in issue) {
-      rtnStr += "\t* *Snippet*:" + "```\t" + `${issue.snippet}` + "```\n";
+      rtnStr += "* *Snippet*:" + "```\t" + `${issue.snippet}` + "```\n";
     }
     rtnStr += "\n\n";
     return rtnStr;
