@@ -36,8 +36,32 @@ const webhookPrint = (data: any) => {
 export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
 
-const convertToMarkedDown = (data: string) => {
-  const text = "your text here";
+const convertToJson = (issues: any) => {
+  let rtnStr = "";
+  issues.forEach((issue: any) => {
+    rtnStr += "";
+    if ("title" in issue) {
+      rtnStr += `*${issue.title}*\n`;
+    }
+    if ("description" in issue) {
+      rtnStr += `Description: ${issue.description}\n`;
+    }
+    if ("severity" in issue) {
+      rtnStr += `Severity: ${issue.severity}\n`;
+    }
+    if ("snippet" in issue) {
+      rtnStr += `Snippet: ${issue.snippet}\n`;
+    }
+    if ("confidence" in issue) {
+      rtnStr += `Confidence: ${issue.snippet}\n`;
+    }
+    return rtnStr;
+  });
+
+  return rtnStr;
+};
+
+const convertToMarkedDown = (text: string) => {
   const matches = [...text.matchAll(/```json(.*)```/gs)];
   const jsonBlocks = matches.map((match) => match[1]);
   console.log("FFFF:", jsonBlocks);
