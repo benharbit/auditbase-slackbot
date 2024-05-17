@@ -41,8 +41,9 @@ const convertToJson = (issues: any) => {
   issues.forEach((issue: any, index: number) => {
     rtnStr += "";
     if ("title" in issue) {
-      const title = `Title: ${issue.title}`;
-      rtnStr += `\n*${title}*\n\n`;
+      rtnStr += "*Title*\n";
+      const title = `${issue.title}`;
+      rtnStr += `\t*${title}*\n\n`;
     }
     if ("description" in issue) {
       rtnStr += `* *Description*: ${issue.description}\n`;
