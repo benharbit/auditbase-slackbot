@@ -62,6 +62,7 @@ const convertToJson = (issues: any) => {
 };
 
 const convertToMarkedDown = (ai_results: string) => {
+  ai_results = ai_results.toString();
   console.log("ai_results: ", ai_results);
   const matches = [...ai_results.matchAll(/```json(.*)```/gs)];
   if (matches.length === 0) {
