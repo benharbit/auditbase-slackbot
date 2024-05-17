@@ -36,6 +36,13 @@ const webhookPrint = (data: any) => {
 export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
 
+const convertToMarkedDown = (data: string) => {
+  const text = "your text here";
+  const matches = [...text.matchAll(/```json(.*)```/g)];
+  const jsonBlocks = matches.map((match) => match[1]);
+  console.log("FFFF:", jsonBlocks);
+};
+
 export const addHttpHandlers = (args: {
   app: ChatBot;
   receiver: ExpressReceiver;
