@@ -44,17 +44,18 @@ const convertToJson = (issues: any) => {
       rtnStr += `*${issue.title}*\n`;
     }
     if ("description" in issue) {
-      rtnStr += `* Description: ${issue.description}\n`;
+      rtnStr += `* *Descriptio*: ${issue.description}\n`;
     }
     if ("severity" in issue) {
-      rtnStr += `* Severity: ${issue.severity}\n`;
+      rtnStr += `* *Severity*: ${issue.severity}\n`;
     }
     if ("snippet" in issue) {
-      rtnStr += `* Snippet: ${issue.snippet}\n`;
+      rtnStr += "* *Snippet*:" + "```" + `${issue.snippet}` + "```\n";
     }
     if ("confidence" in issue) {
-      rtnStr += `* Confidence: ${issue.snippet}\n`;
+      rtnStr += `* *Confidence*: ${issue.snippet}\n`;
     }
+    rtnStr += "\n\n";
     return rtnStr;
   });
 
