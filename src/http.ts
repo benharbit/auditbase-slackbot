@@ -63,7 +63,7 @@ const convertToJson = (issues: any) => {
 
 const convertToMarkedDown = (ai_results: string) => {
   ai_results = ai_results.toString();
-  console.log("ai_results: ", ai_results);
+  console.log("ai_results: ", JSON.stringify(ai_results));
   const matches = [...ai_results.matchAll(/```json(.*)```/gs)];
   if (matches.length === 0) {
     return ai_results;
@@ -145,11 +145,10 @@ export const addHttpHandlers = (args: {
       console.log(`scanType: ${scanType}`);
       console.log(`channel: ${channel}`);
 
-      const mainMessage =
-        scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
+      scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
 
       if (scanType === "ai") {
-        const markdown1 = convertToMarkedDown(req.body);
+        const markdown1 = convertToMarkedDown(req.body["issues"]);
         args.app.dm({
           user: channel,
           text: markdown1,
