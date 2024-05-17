@@ -61,14 +61,15 @@ const convertToJson = (issues: any) => {
   return rtnStr;
 };
 
-const convertToMarkedDown = (text: string) => {
-  const matches = [...text.matchAll(/```json(.*)```/gs)];
+const convertToMarkedDown = (ai_results: string) => {
+  console.log("ai_results: ", ai_results);
+  const matches = [...ai_results.matchAll(/```json(.*)```/gs)];
   if (matches.length === 0) {
-    return text;
+    return ai_results;
   }
 
   const jsonBlocks = matches.map((match) => match[1]);
-  text = "```\n" + jsonBlocks + "\n```";
+  ai_results = "```\n" + jsonBlocks + "\n```";
   console.log("FFFF:", jsonBlocks);
   const markdown1 = convertToJson(JSON.parse(jsonBlocks.toString()));
   return markdown1;
