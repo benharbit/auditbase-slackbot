@@ -37,7 +37,7 @@ export const createHandler = (props: { signingSecret: string }) =>
   new ExpressReceiver(props);
 
 const convertToJson = (issues: any) => {
-  let rtnStr = "\t\n\n*The following issues were found:* \n\n\n\n";
+  let rtnStr = "\n\n*The following issues were found:* \n\n\n\n";
   issues.forEach((issue: any, index: number) => {
     rtnStr += "";
     if ("title" in issue) {
