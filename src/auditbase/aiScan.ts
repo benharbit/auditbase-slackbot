@@ -6,7 +6,8 @@ const AUDITBASE_API_SERVER = process.env.AUDITBASE_API_SERVER;
 export async function placeAiScan(
   file_1: string,
   apiKey: string,
-  webhookUrl: string
+  webhookUrl: string,
+  scan_type: string
 ) {
   const ROUTE = "/ai-scan";
   const url = AUDITBASE_API_SERVER + ROUTE;
@@ -18,6 +19,7 @@ export async function placeAiScan(
     const post_data = {
       source_code: Object.values(files_obj).at(0),
       callback_url: webhookUrl,
+      scan_type,
     };
 
     let res = await axios.post(url.toString(), post_data, {

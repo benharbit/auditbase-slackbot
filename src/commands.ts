@@ -148,7 +148,7 @@ const getUploadScan =
   };
 
 const getAiScan =
-  (app: ChatBot) =>
+  (app: ChatBot, scan_type = "") =>
   async ({
     command,
     ack,
@@ -166,7 +166,12 @@ const getAiScan =
       const args = parseCommand(command.text);
       const key = args.apiKey || process.env.AUDITBASE_API_KEY || "";
 
-      const result = await placeAiScan(args.args[0], key, webhookUrl);
+      const result = await placeAiScan(
+        args.args[0],
+        key,
+        webhookUrl,
+        scan_type
+      );
       await app.dm({
         user: dmDestination,
         text: `AI place scan response: ${JSON.stringify(result)}`,
@@ -278,4 +283,5 @@ export const addSlashCommands = (app: ChatBot) => {
   app.command("/scans", getScans(app));
   app.command("/scans-upload", getUploadScan(app));
   app.command("/scans-ai", getAiScan(app));
+  app.command("/scans-ai-cosmos", getAiScan(app, "cosmos"));
 };
