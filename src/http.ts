@@ -50,11 +50,11 @@ const convertToJson = (issues: any) => {
     if ("severity" in issue) {
       rtnStr += `\t* *Severity*: ${issue.severity}\n`;
     }
+    if ("confidence" in issue) {
+      rtnStr += `\t* *Confidence*: ${issue.confidence}\n`;
+    }
     if ("snippet" in issue) {
       rtnStr += "\t* *Snippet*:" + "```\t" + `${issue.snippet}` + "```\n";
-    }
-    if ("confidence" in issue) {
-      rtnStr += `\t* *Confidence*: ${issue.snippet}\n`;
     }
     rtnStr += "\n\n";
     return rtnStr;
