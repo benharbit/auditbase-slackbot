@@ -71,6 +71,7 @@ const convertToMarkedDown = (text: string) => {
   text = "```\n" + jsonBlocks + "\n```";
   console.log("FFFF:", jsonBlocks);
   const markdown1 = convertToJson(JSON.parse(jsonBlocks.toString()));
+  return markdown1;
 };
 
 export const addHttpHandlers = (args: {
@@ -146,10 +147,10 @@ export const addHttpHandlers = (args: {
         scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
 
       if (scanType === "ai") {
-        convertToMarkedDown(req.body);
+        const markdown1 = convertToMarkedDown(req.body);
         args.app.dm({
           user: channel,
-          text: req.body["issues"],
+          text: markdown1,
           markdown: true,
         });
         return res.send("OK");
