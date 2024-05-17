@@ -109,9 +109,11 @@ export const addHttpHandlers = (args: {
         scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
 
       if (scanType === "ai") {
-        for (const x in req.body) {
-          console.log("req.body[x]: ", x, req.body[x]);
-        }
+        args.app.dm({
+          user: channel,
+          text: req.body["issues"],
+          markdown: true,
+        });
       }
       args.app.dm({
         user: channel,

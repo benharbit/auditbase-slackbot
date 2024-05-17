@@ -8,13 +8,21 @@ export class ChatBot extends App {
     user,
     blocks,
     text = "",
+    markdown = false,
   }: {
     user: string;
     blocks?: Array<Block | KnownBlock>;
     text?: string;
+    markdown?: boolean;
   }) {
     const token = process.env.SLACK_BOT_TOKEN;
-    await this.client.chat.postMessage({ channel: user, token, blocks, text });
+    await this.client.chat.postMessage({
+      channel: user,
+      token,
+      blocks,
+      text,
+      markdown,
+    });
   }
 }
 
