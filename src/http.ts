@@ -114,6 +114,7 @@ export const addHttpHandlers = (args: {
           text: req.body["issues"],
           markdown: true,
         });
+        return res.send("OK");
       }
       args.app.dm({
         user: channel,
