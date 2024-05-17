@@ -38,7 +38,7 @@ export const createHandler = (props: { signingSecret: string }) =>
 
 const convertToMarkedDown = (data: string) => {
   const text = "your text here";
-  const matches = [...text.matchAll(/```json(.*)```/g)];
+  const matches = [...text.matchAll(/```json(.*)```/gs)];
   const jsonBlocks = matches.map((match) => match[1]);
   console.log("FFFF:", jsonBlocks);
 };
