@@ -75,7 +75,15 @@ const convertToMarkedDown = (ai_results: string) => {
   const jsonBlocks = matches.map((match) => match[1]);
   ai_results = "```\n" + jsonBlocks + "\n```";
   console.log("FFFF:", jsonBlocks);
-  const markdown1 = convertToJson(JSON.parse(jsonBlocks.toString()));
+  let json_object = {};
+  try {
+    json_object = JSON.parse(jsonBlocks.toString());
+  } catch (e) {
+    console.log("error in convertToMarkedDown: ", e);
+    return ai_results;
+  }
+
+  const markdown1 = convertToJson(json_object);
   return markdown1;
 };
 
