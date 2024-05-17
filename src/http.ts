@@ -18,6 +18,7 @@ const truncateIssues = (data: Array<any>) => {
 };
 
 const webhookPrint = (data: any) => {
+  console.log("enter webhookPrint");
   console.log("webhookPrint data: ", data["result"]);
   const issues = data["result"]["issues"];
   const scanId = data["scan_id"];
@@ -103,9 +104,15 @@ export const addHttpHandlers = (args: {
       const title = `${scanTypeFmted} scan Webhook Received`;
       console.log(`scanType: ${scanType}`);
       console.log(`channel: ${channel}`);
+
       const mainMessage =
         scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
 
+      if (scanType === "ai") {
+        for (const x in req.body) {
+          console.log("req.body[x]: ", x, req.body[x]);
+        }
+      }
       args.app.dm({
         user: channel,
         text: title + "\r\n" + mainMessage,
