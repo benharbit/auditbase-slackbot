@@ -111,7 +111,7 @@ export const addHttpHandlers = (args: {
       if (scanType === "ai") {
         args.app.dm({
           user: channel,
-          text: "# test1 \r\n dkdkdkdkd",
+          text: req.body["issues"],
           markdown: true,
         });
         return res.send("OK");
