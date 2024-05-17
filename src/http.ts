@@ -63,8 +63,14 @@ const convertToJson = (issues: any) => {
 
 const convertToMarkedDown = (text: string) => {
   const matches = [...text.matchAll(/```json(.*)```/gs)];
+  if (matches.length === 0) {
+    return text;
+  }
+
   const jsonBlocks = matches.map((match) => match[1]);
+  text = "```\n" + jsonBlocks + "\n```";
   console.log("FFFF:", jsonBlocks);
+  const markdown1 = convertToJson(JSON.parse(jsonBlocks.toString()));
 };
 
 export const addHttpHandlers = (args: {
