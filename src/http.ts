@@ -145,7 +145,8 @@ export const addHttpHandlers = (args: {
       console.log(`scanType: ${scanType}`);
       console.log(`channel: ${channel}`);
 
-      scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
+      const mainMessage =
+        scanType === "ai" ? JSON.stringify(req.body) : webhookPrint(req.body);
 
       if (scanType === "ai") {
         const markdown1 = convertToMarkedDown(req.body["issues"]);
