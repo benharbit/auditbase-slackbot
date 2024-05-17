@@ -42,7 +42,7 @@ const convertToJson = (issues: any) => {
     rtnStr += "";
     if ("title" in issue) {
       rtnStr += "*Title:*\n";
-      const title = "`" + `${issue.title}` + "`";
+      const title = `${issue.title}`;
       rtnStr += `\t*${title}*\n\n`;
     }
     if ("description" in issue) {
