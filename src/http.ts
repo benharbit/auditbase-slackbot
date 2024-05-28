@@ -83,7 +83,7 @@ const convertToMarkedDown = (ai_results: string) => {
     return ai_results;
   }
 
-  print("json_object: ", JSON.stringify(json_object));
+  console.log("json_object: ", JSON.stringify(json_object));
 
   const markdown1 = convertToJson(json_object);
   return markdown1;
